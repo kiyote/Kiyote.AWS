@@ -1,0 +1,40 @@
+using System;
+using NUnit.Framework;
+
+namespace InjectableAWS.Tests.Integration {
+
+	[TestFixture]
+	[Ignore( "Only need to run this when testing actual allocation." )]
+	public sealed class CognitoContextTests {
+
+		private CognitoContext<CognitoContextTests>? _context;
+
+		[SetUp]
+		public void SetUp() {
+			var credentialsOptions = new CredentialsOptions {
+				CredentialsFile = @"",
+			};
+			var credentialsProvider = new CredentialsProvider( credentialsOptions );
+			var options = new CognitoOptions<CognitoContextTests> {
+				CredentialsProfile = "",
+				RegionEndpoint = "",
+				Role = "",
+				ServiceUrl = "",
+				ClientId = ""
+			};
+			_context = new CognitoContext<CognitoContextTests>( credentialsProvider, options );
+		}
+
+		[TearDown]
+		public void TearDown() {
+			if( _context != null ) {
+				( (IDisposable)_context ).Dispose();
+			}
+		}
+
+		[Test]
+		public void Ctor_ValidParameters_ContextCreated() {
+			Assert.IsNotNull( _context );
+		}
+	}
+}

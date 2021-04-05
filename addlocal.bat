@@ -1,0 +1,1 @@
+nuget add -Source c:\code\nuget\packages src\InjectableAWS\bin\Release\InjectableAWS.1.0.6.nupkg
