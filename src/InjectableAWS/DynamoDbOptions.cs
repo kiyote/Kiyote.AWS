@@ -4,5 +4,6 @@ namespace InjectableAWS {
 		string? RegionEndpoint,
 		string? ServiceUrl,
 		string? Role
-	);
+	): IDynamoDbOptions<T> {
+	}
 }

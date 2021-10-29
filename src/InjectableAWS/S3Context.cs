@@ -20,7 +20,7 @@ namespace InjectableAWS {
 
 		public S3Context(
 			ICredentialsProvider credentialsProvider,
-			S3Options<T> options
+			IS3Options<T> options
 		) {
 			if( options is null ) {
 				throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
@@ -49,7 +49,7 @@ namespace InjectableAWS {
 
 		private static IAmazonS3 CreateS3Client(
 			ICredentialsProvider credentialsProvider,
-			S3Options<T> options
+			IS3Options<T> options
 		) {
 			AWSCredentials? roleCredentials = credentialsProvider.GetCredentials( options.CredentialsProfile, options.Role );
 

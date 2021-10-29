@@ -4,5 +4,6 @@ namespace InjectableAWS {
 		string? CredentialsProfile,
 		string? RegionEndpoint,
 		string? Role
-	);
+	): IS3Options<T> {
+	}
 }

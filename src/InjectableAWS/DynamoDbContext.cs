@@ -21,7 +21,7 @@ namespace InjectableAWS {
 
 		public DynamoDbContext(
 			ICredentialsProvider credentialsProvider,
-			DynamoDbOptions<T> options
+			IDynamoDbOptions<T> options
 		) {
 			if( options is null ) {
 				throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
@@ -57,7 +57,7 @@ namespace InjectableAWS {
 
 		private static IAmazonDynamoDB CreateClient(
 			ICredentialsProvider credentialsProvider,
-			DynamoDbOptions<T> options
+			IDynamoDbOptions<T> options
 		) {
 			AWSCredentials roleCredentials = credentialsProvider.GetCredentials( options.CredentialsProfile, options.Role );
 

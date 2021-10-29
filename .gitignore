@@ -5,6 +5,7 @@
 
 **/credentials.txt
 **/appsettings.development.json
+**/addlocal.bat
 
 # User-specific files
 *.rsuser

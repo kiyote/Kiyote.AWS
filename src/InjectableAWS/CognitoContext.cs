@@ -20,7 +20,7 @@ namespace InjectableAWS {
 
 		public CognitoContext(
 			ICredentialsProvider credentialsProvider,
-			CognitoOptions<T> options
+			ICognitoOptions<T> options
 		) {
 			if( credentialsProvider is null ) {
 				throw new ArgumentException( $"{nameof( credentialsProvider )} must not be null.", nameof( credentialsProvider ) );
@@ -53,7 +53,7 @@ namespace InjectableAWS {
 
 		private static IAmazonCognitoIdentityProvider CreateCognitoProvider(
 			ICredentialsProvider credentialsProvider,
-			CognitoOptions<T> options
+			ICognitoOptions<T> options
 		) {
 			AWSCredentials roleCredentials = credentialsProvider.GetCredentials( options.CredentialsProfile, options.Role );
 
