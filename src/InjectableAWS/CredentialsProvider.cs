@@ -7,20 +7,23 @@ using Microsoft.Extensions.Options;
 namespace InjectableAWS {
 	public sealed class CredentialsProvider : ICredentialsProvider {
 
-		private readonly CredentialsOptions _options;
+		private readonly ICredentialsOptions _options;
 
 		public CredentialsProvider(
 			IOptions<CredentialsOptions> options
-		) : this( options?.Value ?? throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) ) ) {
+		) : this( options?.Value ?? throw new ArgumentNullException( nameof(options) ) ) {
 		}
 
 		public CredentialsProvider(
-			CredentialsOptions options
+			ICredentialsOptions options
 		) {
 			_options = options;
 		}
 
-		AWSCredentials ICredentialsProvider.AssumeRole( AWSCredentials credentials, string role ) {
+		AWSCredentials ICredentialsProvider.AssumeRole(
+			AWSCredentials credentials,
+			string role
+		) {
 			var roleCredentials = new AssumeRoleAWSCredentials(
 				credentials,
 				role,
@@ -31,6 +34,7 @@ namespace InjectableAWS {
 
 		AWSCredentials ICredentialsProvider.GetCredentials() {
 			var chain = new CredentialProfileStoreChain( _options.CredentialsFile );
+			
 			if( !chain.TryGetAWSCredentials( "default", out AWSCredentials credentials ) ) {
 				throw new InvalidOperationException( $"Unable to read default profile from file '{_options.CredentialsFile}'." );
 			}
