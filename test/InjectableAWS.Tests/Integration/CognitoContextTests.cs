@@ -16,10 +16,9 @@ namespace InjectableAWS.Tests.Integration {
 			);
 			var credentialsProvider = new CredentialsProvider( credentialsOptions );
 			var options = new CognitoOptions<CognitoContextTests>(
-				CredentialsProfile: "",
 				ClientId: "",
 				RegionEndpoint: "",
-				ServiceUrl: "",
+				CredentialsProfile: "",
 				Role: ""
 			);
 			_context = new CognitoContext<CognitoContextTests>( credentialsProvider, options );

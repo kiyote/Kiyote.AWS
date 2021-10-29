@@ -31,18 +31,6 @@ namespace InjectableAWS {
 				throw new ArgumentException( $"{nameof( credentialsProvider )} must not be null.", nameof( credentialsProvider ) );
 			}
 
-			if( string.IsNullOrWhiteSpace( options.CredentialsProfile ) ) {
-				throw new ArgumentException( $"{nameof( options.CredentialsProfile )} must not be null or empty.", nameof( options ) );
-			}
-
-			if( string.IsNullOrWhiteSpace( options.Role ) ) {
-				throw new ArgumentException( $"{nameof( options.Role )} must not be null or empty.", nameof( options ) );
-			}
-
-			if( string.IsNullOrWhiteSpace( options.ServiceUrl ) ) {
-				throw new ArgumentException( $"{nameof( options.ServiceUrl )} must not be null or empty.", nameof( options ) );
-			}
-
 			if( string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
 				throw new ArgumentException( $"{nameof( options.RegionEndpoint )} must not be null or empty.", nameof( options ) );
 			}
@@ -59,15 +47,20 @@ namespace InjectableAWS {
 			ICredentialsProvider credentialsProvider,
 			IDynamoDbOptions<T> options
 		) {
-			AWSCredentials roleCredentials = credentialsProvider.GetCredentials( options.CredentialsProfile, options.Role );
+			AWSCredentials credentials = credentialsProvider.GetCredentials( options.CredentialsProfile );
+			if( !string.IsNullOrWhiteSpace( options.Role ) ) {
+				credentials = credentialsProvider.AssumeRole(
+					credentials,
+					options.Role
+				);
+			}
 
 			AmazonDynamoDBConfig config = new AmazonDynamoDBConfig {
 				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint ),
-				ServiceURL = options.ServiceUrl,
 				LogMetrics = true,
 				DisableLogging = false
 			};
-			return new AmazonDynamoDBClient( roleCredentials, config );
+			return new AmazonDynamoDBClient( credentials, config );
 		}
 
 		public void Dispose() {

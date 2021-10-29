@@ -30,14 +30,6 @@ namespace InjectableAWS {
 				throw new ArgumentException( $"{nameof( credentialsProvider )} must not be null.", nameof( credentialsProvider ) );
 			}
 
-			if( string.IsNullOrWhiteSpace( options.CredentialsProfile ) ) {
-				throw new ArgumentException( $"{nameof( options.CredentialsProfile )} must not be null or empty.", nameof( options ) );
-			}
-
-			if( string.IsNullOrWhiteSpace( options.Role ) ) {
-				throw new ArgumentException( $"{nameof( options.Role )} must not be null or empty.", nameof( options ) );
-			}
-
 			if( string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
 				throw new ArgumentException( $"{nameof( options.RegionEndpoint )} must not be null or empty.", nameof( options ) );
 			}
@@ -51,14 +43,20 @@ namespace InjectableAWS {
 			ICredentialsProvider credentialsProvider,
 			IS3Options<T> options
 		) {
-			AWSCredentials? roleCredentials = credentialsProvider.GetCredentials( options.CredentialsProfile, options.Role );
+			AWSCredentials credentials = credentialsProvider.GetCredentials( options.CredentialsProfile );
+			if( !string.IsNullOrWhiteSpace( options.Role ) ) {
+				credentials = credentialsProvider.AssumeRole(
+					credentials,
+					options.Role
+				);
+			}
 
 			AmazonS3Config config = new AmazonS3Config() {
 				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint ),
 				LogMetrics = true,
 				DisableLogging = false
 			};
-			var client = new AmazonS3Client( roleCredentials, config );
+			var client = new AmazonS3Client( credentials, config );
 
 			return client;
 		}

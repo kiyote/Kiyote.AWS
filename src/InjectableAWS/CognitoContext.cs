@@ -30,18 +30,6 @@ namespace InjectableAWS {
 				throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
 			}
 
-			if( string.IsNullOrWhiteSpace( options.CredentialsProfile ) ) {
-				throw new ArgumentException( $"{nameof( options.CredentialsProfile )} must not be null or empty.", nameof( options ) );
-			}
-
-			if( string.IsNullOrWhiteSpace( options.Role ) ) {
-				throw new ArgumentException( $"{nameof( options.Role )} must not be null or empty.", nameof( options ) );
-			}
-
-			if( string.IsNullOrWhiteSpace( options.ServiceUrl ) ) {
-				throw new ArgumentException( $"{nameof( options.ServiceUrl )} must not be null or empty.", nameof( options ) );
-			}
-
 			if( string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
 				throw new ArgumentException( $"{nameof( options.RegionEndpoint )} must not be null or empty.", nameof( options ) );
 			}
@@ -55,15 +43,20 @@ namespace InjectableAWS {
 			ICredentialsProvider credentialsProvider,
 			ICognitoOptions<T> options
 		) {
-			AWSCredentials roleCredentials = credentialsProvider.GetCredentials( options.CredentialsProfile, options.Role );
+			AWSCredentials credentials = credentialsProvider.GetCredentials( options.CredentialsProfile );
+			if( !string.IsNullOrWhiteSpace( options.Role ) ) {
+				credentials = credentialsProvider.AssumeRole(
+								credentials,
+								options.Role
+							);
+			}
 
 			AmazonCognitoIdentityProviderConfig config = new AmazonCognitoIdentityProviderConfig {
 				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint ),
-				ServiceURL = options.ServiceUrl,
 				LogMetrics = true,
 				DisableLogging = false
 			};
-			var client = new AmazonCognitoIdentityProviderClient( roleCredentials, config );
+			var client = new AmazonCognitoIdentityProviderClient( credentials, config );
 
 			return client;
 		}

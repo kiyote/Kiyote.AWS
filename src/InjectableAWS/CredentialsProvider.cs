@@ -11,7 +11,7 @@ namespace InjectableAWS {
 
 		public CredentialsProvider(
 			IOptions<CredentialsOptions> options
-		) : this( options?.Value ?? throw new ArgumentNullException( nameof(options) ) ) {
+		) : this( options?.Value ?? throw new ArgumentNullException( nameof( options ) ) ) {
 		}
 
 		public CredentialsProvider(
@@ -33,44 +33,34 @@ namespace InjectableAWS {
 		}
 
 		AWSCredentials ICredentialsProvider.GetCredentials() {
-			var chain = new CredentialProfileStoreChain( _options.CredentialsFile );
-			
-			if( !chain.TryGetAWSCredentials( "default", out AWSCredentials credentials ) ) {
-				throw new InvalidOperationException( $"Unable to read default profile from file '{_options.CredentialsFile}'." );
+			if( string.IsNullOrWhiteSpace( _options.CredentialsFile ) ) {
+				var chain = new CredentialProfileStoreChain( _options.CredentialsFile );
+
+				if( !chain.TryGetAWSCredentials( "default", out AWSCredentials? credentials ) ) {
+					throw new InvalidOperationException( $"Unable to read profile 'default' from file '{_options.CredentialsFile}'." );
+				}
+				return credentials;
 			}
 
-			return credentials;
+			return FallbackCredentialsFactory.GetCredentials( false );
 		}
 
 		AWSCredentials ICredentialsProvider.GetCredentials(
 			string? profile
 		) {
-			var chain = new CredentialProfileStoreChain( _options.CredentialsFile );
-			if( !chain.TryGetAWSCredentials( profile, out AWSCredentials credentials ) ) {
-				throw new InvalidOperationException( $"Unable to read profile '{profile}' from file '{_options.CredentialsFile}'." );
-			}
-			return credentials;
-		}
-
-		AWSCredentials ICredentialsProvider.GetCredentials(
-			string? profile,
-			string? role
-		) {
-			var chain = new CredentialProfileStoreChain( _options.CredentialsFile );
-			if( !chain.TryGetAWSCredentials( profile, out AWSCredentials credentials ) ) {
-				throw new InvalidOperationException( $"Unable to read profile '{profile}' from file '{_options.CredentialsFile}'." );
-			}
-
-			if( string.IsNullOrWhiteSpace( role ) ) {
+			if( !string.IsNullOrWhiteSpace( _options.CredentialsFile ) ) {
+				var chain = new CredentialProfileStoreChain( _options.CredentialsFile );
+				if( !chain.TryGetAWSCredentials( profile, out AWSCredentials credentials ) ) {
+					throw new InvalidOperationException( $"Unable to read profile '{profile}' from file '{_options.CredentialsFile}'." );
+				}
 				return credentials;
 			}
 
-			var roleCredentials = new AssumeRoleAWSCredentials(
-				credentials,
-				role,
-				Guid.NewGuid().ToString( "N", CultureInfo.InvariantCulture ) );
+			if( string.IsNullOrWhiteSpace( profile ) ) {
+				return FallbackCredentialsFactory.GetCredentials( false );
+			}
 
-			return roleCredentials;
+			throw new InvalidOperationException( $"Unable to local profile '{profile}'." );
 		}
 	}
 }
