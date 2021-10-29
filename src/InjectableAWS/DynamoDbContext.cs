@@ -6,14 +6,16 @@ using Amazon.Runtime;
 using Microsoft.Extensions.Options;
 
 namespace InjectableAWS {
-	public sealed class DynamoDbContext<T>: IDisposable {
+	public sealed class DynamoDbContext<T> : IDisposable {
+
+		private bool _disposed;
 
 		public DynamoDbContext(
 			ICredentialsProvider credentialsProvider,
 			IOptions<DynamoDbOptions<T>> options
-		): this(
+		) : this(
 			credentialsProvider,
-			options.Value
+			options?.Value ?? throw new ArgumentNullException( nameof( credentialsProvider ) )
 		) {
 		}
 
@@ -21,7 +23,7 @@ namespace InjectableAWS {
 			ICredentialsProvider credentialsProvider,
 			DynamoDbOptions<T> options
 		) {
-			if (options is null) {
+			if( options is null ) {
 				throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
 			}
 
@@ -35,6 +37,10 @@ namespace InjectableAWS {
 
 			if( string.IsNullOrWhiteSpace( options.Role ) ) {
 				throw new ArgumentException( $"{nameof( options.Role )} must not be null or empty.", nameof( options ) );
+			}
+
+			if( string.IsNullOrWhiteSpace( options.ServiceUrl ) ) {
+				throw new ArgumentException( $"{nameof( options.ServiceUrl )} must not be null or empty.", nameof( options ) );
 			}
 
 			if( string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
@@ -64,9 +70,22 @@ namespace InjectableAWS {
 			return new AmazonDynamoDBClient( roleCredentials, config );
 		}
 
-		void IDisposable.Dispose() {
-			Context.Dispose();
-			Client.Dispose();
+		public void Dispose() {
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+
+		private void Dispose( bool disposing ) {
+			if( _disposed ) {
+				return;
+			}
+
+			if( disposing ) {
+				Context.Dispose();
+				Client.Dispose();
+			}
+
+			_disposed = true;
 		}
 	}
 

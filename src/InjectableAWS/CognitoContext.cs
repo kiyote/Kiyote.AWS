@@ -1,19 +1,20 @@
 using System;
-using System.Globalization;
 using Amazon;
 using Amazon.CognitoIdentityProvider;
 using Amazon.Runtime;
 using Microsoft.Extensions.Options;
 
 namespace InjectableAWS {
-	public sealed class CognitoContext<T>: IDisposable {
+	public sealed class CognitoContext<T> : IDisposable {
+
+		private bool _disposed;
 
 		public CognitoContext(
 			ICredentialsProvider credentialsProvider,
 			IOptions<CognitoOptions<T>> options
-		): this(
+		) : this(
 			credentialsProvider,
-			options.Value
+			options?.Value ?? throw new ArgumentNullException( nameof( options ) )
 		) {
 		}
 
@@ -21,11 +22,11 @@ namespace InjectableAWS {
 			ICredentialsProvider credentialsProvider,
 			CognitoOptions<T> options
 		) {
-			if (credentialsProvider is null) {
+			if( credentialsProvider is null ) {
 				throw new ArgumentException( $"{nameof( credentialsProvider )} must not be null.", nameof( credentialsProvider ) );
 			}
 
-			if (options is null) {
+			if( options is null ) {
 				throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
 			}
 
@@ -35,6 +36,10 @@ namespace InjectableAWS {
 
 			if( string.IsNullOrWhiteSpace( options.Role ) ) {
 				throw new ArgumentException( $"{nameof( options.Role )} must not be null or empty.", nameof( options ) );
+			}
+
+			if( string.IsNullOrWhiteSpace( options.ServiceUrl ) ) {
+				throw new ArgumentException( $"{nameof( options.ServiceUrl )} must not be null or empty.", nameof( options ) );
 			}
 
 			if( string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
@@ -63,8 +68,21 @@ namespace InjectableAWS {
 			return client;
 		}
 
-		void IDisposable.Dispose() {
-			Provider.Dispose();
+		public void Dispose() {
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+
+		private void Dispose( bool disposing ) {
+			if( _disposed ) {
+				return;
+			}
+
+			if( disposing ) {
+				Provider.Dispose();
+			}
+
+			_disposed = true;
 		}
 	}
 }

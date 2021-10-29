@@ -11,16 +11,16 @@ namespace InjectableAWS.Tests.Integration {
 
 		[SetUp]
 		public void SetUp() {
-			var credentialsOptions = new CredentialsOptions {
-				CredentialsFile = @"",
-			};
+			var credentialsOptions = new CredentialsOptions(
+				CredentialsFile: @""
+			);
 			var credentialsProvider = new CredentialsProvider( credentialsOptions );
-			var options = new DynamoDbOptions<DynamoDbContextTests> {
-				CredentialsProfile = "",
-				RegionEndpoint = "",
-				Role = "",
-				ServiceUrl = ""
-			};
+			var options = new DynamoDbOptions<DynamoDbContextTests>(
+				CredentialsProfile: "",
+				RegionEndpoint: "",
+				Role: "",
+				ServiceUrl: ""
+			);
 			_context = new DynamoDbContext<DynamoDbContextTests>( credentialsProvider, options );
 		}
 

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Todd Lang</Authors>
     <Company>Todd Lang</Company>
@@ -11,10 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.0.7" />
-    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.8" />
-    <PackageReference Include="AWSSDK.S3" Version="3.7.0.8" />
-    <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.0.7" />
+    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.1.59" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.0.88" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.3.20" />
+    <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.1.77" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />

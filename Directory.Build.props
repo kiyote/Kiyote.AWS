@@ -1,21 +1,23 @@
 <Project>
 	<PropertyGroup>
-    <ProductVersion>1.0.6</ProductVersion>
-  </PropertyGroup>
+		<ProductVersion>2.0.0</ProductVersion>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <LangVersion>9.0</LangVersion>
-    <Nullable>Enable</Nullable>
-    <Version Condition=" '$(ProductVersion)' == '' ">0.0.1</Version>
-    <Version Condition=" '$(ProductVersion)' != '' ">$(ProductVersion)</Version>
-  </PropertyGroup>
-  
-  <PropertyGroup>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors />
-  </PropertyGroup>	
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-  </PropertyGroup>	
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<LangVersion>9.0</LangVersion>
+		<Nullable>Enable</Nullable>
+		<Version Condition=" '$(ProductVersion)' == '' ">0.0.1</Version>
+		<Version Condition=" '$(ProductVersion)' != '' ">$(ProductVersion)</Version>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<WarningsAsErrors />
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+	</PropertyGroup>
 </Project>

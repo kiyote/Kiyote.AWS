@@ -11,15 +11,15 @@ namespace InjectableAWS.Tests.Integration {
 
 		[SetUp]
 		public void SetUp() {
-			var credentialsOptions = new CredentialsOptions {
-				CredentialsFile = @"",
-			};
+			var credentialsOptions = new CredentialsOptions(
+				CredentialsFile: @""
+			);
 			var credentialsProvider = new CredentialsProvider( credentialsOptions );
-			var options = new S3Options<S3ContextTests> {
-				CredentialsProfile = "",
-				RegionEndpoint = "",
-				Role = ""
-			};
+			var options = new S3Options<S3ContextTests>(
+				CredentialsProfile: "",
+				RegionEndpoint: "",
+				Role: ""
+			);
 			_context = new S3Context<S3ContextTests>( credentialsProvider, options );
 		}
 

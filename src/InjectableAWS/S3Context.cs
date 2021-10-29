@@ -1,20 +1,20 @@
 using System;
-using System.Globalization;
 using Amazon;
 using Amazon.Runtime;
-using Amazon.Runtime.CredentialManagement;
 using Amazon.S3;
 using Microsoft.Extensions.Options;
 
 namespace InjectableAWS {
 	public sealed class S3Context<T> : IDisposable {
 
+		private bool _disposed;
+
 		public S3Context(
 			ICredentialsProvider credentialsProvider,
 			IOptions<S3Options<T>> options
 		) : this(
 			credentialsProvider,
-			options.Value
+			options?.Value ?? throw new ArgumentNullException( nameof( options ) )
 		) {
 		}
 
@@ -22,7 +22,7 @@ namespace InjectableAWS {
 			ICredentialsProvider credentialsProvider,
 			S3Options<T> options
 		) {
-			if (options is null) {
+			if( options is null ) {
 				throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
 			}
 
@@ -56,15 +56,28 @@ namespace InjectableAWS {
 			AmazonS3Config config = new AmazonS3Config() {
 				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint ),
 				LogMetrics = true,
-				DisableLogging = false				
+				DisableLogging = false
 			};
 			var client = new AmazonS3Client( roleCredentials, config );
 
 			return client;
 		}
 
-		void IDisposable.Dispose() {
-			Client.Dispose();
+		public void Dispose() {
+			Dispose( true );
+			GC.SuppressFinalize( this );
+		}
+
+		private void Dispose( bool disposing ) {
+			if( _disposed ) {
+				return;
+			}
+
+			if( disposing ) {
+				Client.Dispose();
+			}
+
+			_disposed = true;
 		}
 	}
 }

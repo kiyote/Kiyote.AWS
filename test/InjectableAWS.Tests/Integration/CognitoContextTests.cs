@@ -11,17 +11,17 @@ namespace InjectableAWS.Tests.Integration {
 
 		[SetUp]
 		public void SetUp() {
-			var credentialsOptions = new CredentialsOptions {
-				CredentialsFile = @"",
-			};
+			var credentialsOptions = new CredentialsOptions(
+				CredentialsFile: @""
+			);
 			var credentialsProvider = new CredentialsProvider( credentialsOptions );
-			var options = new CognitoOptions<CognitoContextTests> {
-				CredentialsProfile = "",
-				RegionEndpoint = "",
-				Role = "",
-				ServiceUrl = "",
-				ClientId = ""
-			};
+			var options = new CognitoOptions<CognitoContextTests>(
+				CredentialsProfile: "",
+				ClientId: "",
+				RegionEndpoint: "",
+				ServiceUrl: "",
+				Role: ""
+			);
 			_context = new CognitoContext<CognitoContextTests>( credentialsProvider, options );
 		}
 

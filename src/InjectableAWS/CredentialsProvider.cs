@@ -11,17 +11,13 @@ namespace InjectableAWS {
 
 		public CredentialsProvider(
 			IOptions<CredentialsOptions> options
-		) : this( options.Value ) {
+		) : this( options?.Value ?? throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) ) ) {
 		}
 
 		public CredentialsProvider(
 			CredentialsOptions options
 		) {
 			_options = options;
-
-			if( options is null ) {
-				throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
-			}
 		}
 
 		AWSCredentials ICredentialsProvider.AssumeRole( AWSCredentials credentials, string role ) {
