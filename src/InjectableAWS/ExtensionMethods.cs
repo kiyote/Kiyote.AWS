@@ -15,11 +15,31 @@ namespace InjectableAWS {
 			return services;
 		}
 
+		public static IServiceCollection AddCredentials(
+			this IServiceCollection services,
+			CredentialsOptions configuration
+		) {
+			services.TryAddSingleton( configuration );
+			services.TryAddSingleton<ICredentialsProvider, CredentialsProvider>();
+
+			return services;
+		}
+
 		public static IServiceCollection AddCognito<T>(
 			this IServiceCollection services,
 			IConfigurationSection configuration
 		) {
 			services.Configure<CognitoOptions<T>>( configuration );
+			services.TryAddSingleton<CognitoContext<T>>();
+
+			return services;
+		}
+
+		public static IServiceCollection AddCognito<T>(
+			this IServiceCollection services,
+			CognitoOptions<T> configuration
+		) {
+			services.TryAddSingleton( configuration );
 			services.TryAddSingleton<CognitoContext<T>>();
 
 			return services;
@@ -35,11 +55,31 @@ namespace InjectableAWS {
 			return services;
 		}
 
+		public static IServiceCollection AddDynamoDb<T>(
+			this IServiceCollection services,
+			DynamoDbOptions<T> configuration
+		) {
+			services.TryAddSingleton( configuration );
+			services.TryAddSingleton<DynamoDbContext<T>>();
+
+			return services;
+		}
+
 		public static IServiceCollection AddS3<T>(
 			this IServiceCollection services,
 			IConfigurationSection configuration
 		) {
 			services.Configure<S3Options<T>>( configuration );
+			services.TryAddSingleton<S3Context<T>>();
+
+			return services;
+		}
+
+		public static IServiceCollection AddS3<T>(
+			this IServiceCollection services,
+			S3Options<T> configuration
+		) {
+			services.TryAddSingleton( configuration );
 			services.TryAddSingleton<S3Context<T>>();
 
 			return services;
