@@ -11,9 +11,7 @@ namespace InjectableAWS.Tests.Integration {
 
 		[SetUp]
 		public void SetUp() {
-			var credentialsOptions = new CredentialsOptions(
-				CredentialsFile: @""
-			);
+			var credentialsOptions = new CredentialsOptions();
 			var credentialsProvider = new CredentialsProvider( credentialsOptions );
 			var options = new CognitoOptions<CognitoContextTests>(
 				ClientId: "",

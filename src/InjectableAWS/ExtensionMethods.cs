@@ -6,10 +6,9 @@ namespace InjectableAWS {
 	public static class ExtensionMethods {
 
 		public static IServiceCollection AddCredentials(
-			this IServiceCollection services,
-			IConfigurationSection configuration
+			this IServiceCollection services
 		) {
-			services.Configure<CredentialsOptions>( configuration );
+			services.TryAddSingleton( new CredentialsOptions() );
 			services.TryAddSingleton<ICredentialsProvider, CredentialsProvider>();
 
 			return services;
@@ -20,6 +19,16 @@ namespace InjectableAWS {
 			CredentialsOptions configuration
 		) {
 			services.TryAddSingleton( configuration );
+			services.TryAddSingleton<ICredentialsProvider, CredentialsProvider>();
+
+			return services;
+		}
+
+		public static IServiceCollection AddCredentials(
+			this IServiceCollection services,
+			IConfigurationSection configuration
+		) {
+			services.Configure<CredentialsOptions>( configuration );
 			services.TryAddSingleton<ICredentialsProvider, CredentialsProvider>();
 
 			return services;
@@ -46,10 +55,9 @@ namespace InjectableAWS {
 		}
 
 		public static IServiceCollection AddDynamoDb<T>(
-			this IServiceCollection services,
-			IConfigurationSection configuration
+			this IServiceCollection services
 		) {
-			services.Configure<DynamoDbOptions<T>>( configuration );
+			services.TryAddSingleton( new DynamoDbOptions<T>() );
 			services.TryAddSingleton<DynamoDbContext<T>>();
 
 			return services;
@@ -65,11 +73,20 @@ namespace InjectableAWS {
 			return services;
 		}
 
-		public static IServiceCollection AddS3<T>(
+		public static IServiceCollection AddDynamoDb<T>(
 			this IServiceCollection services,
 			IConfigurationSection configuration
 		) {
-			services.Configure<S3Options<T>>( configuration );
+			services.Configure<DynamoDbOptions<T>>( configuration );
+			services.TryAddSingleton<DynamoDbContext<T>>();
+
+			return services;
+		}
+
+		public static IServiceCollection AddS3<T>(
+			this IServiceCollection services
+		) {
+			services.TryAddSingleton( new S3Options<T>() );
 			services.TryAddSingleton<S3Context<T>>();
 
 			return services;
@@ -80,6 +97,16 @@ namespace InjectableAWS {
 			S3Options<T> configuration
 		) {
 			services.TryAddSingleton( configuration );
+			services.TryAddSingleton<S3Context<T>>();
+
+			return services;
+		}
+
+		public static IServiceCollection AddS3<T>(
+			this IServiceCollection services,
+			IConfigurationSection configuration
+		) {
+			services.Configure<S3Options<T>>( configuration );
 			services.TryAddSingleton<S3Context<T>>();
 
 			return services;

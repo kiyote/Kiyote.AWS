@@ -30,10 +30,6 @@ namespace InjectableAWS {
 				throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
 			}
 
-			if( string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
-				throw new ArgumentException( $"{nameof( options.RegionEndpoint )} must not be null or empty.", nameof( options ) );
-			}
-
 			Provider = CreateCognitoProvider( credentialsProvider, options );
 		}
 
@@ -51,14 +47,14 @@ namespace InjectableAWS {
 							);
 			}
 
-			AmazonCognitoIdentityProviderConfig config = new AmazonCognitoIdentityProviderConfig {
-				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint ),
-				LogMetrics = true,
-				DisableLogging = false
-			};
-			var client = new AmazonCognitoIdentityProviderClient( credentials, config );
+			if( !string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
+				AmazonCognitoIdentityProviderConfig config = new AmazonCognitoIdentityProviderConfig {
+					RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint )
+				};
+				return new AmazonCognitoIdentityProviderClient( credentials, config );
+			}
 
-			return client;
+			return new AmazonCognitoIdentityProviderClient( credentials );
 		}
 
 		public void Dispose() {

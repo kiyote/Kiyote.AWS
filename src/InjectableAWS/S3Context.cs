@@ -30,10 +30,6 @@ namespace InjectableAWS {
 				throw new ArgumentException( $"{nameof( credentialsProvider )} must not be null.", nameof( credentialsProvider ) );
 			}
 
-			if( string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
-				throw new ArgumentException( $"{nameof( options.RegionEndpoint )} must not be null or empty.", nameof( options ) );
-			}
-
 			Client = CreateS3Client( credentialsProvider, options );
 		}
 
@@ -51,14 +47,14 @@ namespace InjectableAWS {
 				);
 			}
 
-			AmazonS3Config config = new AmazonS3Config() {
-				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint ),
-				LogMetrics = true,
-				DisableLogging = false
-			};
-			var client = new AmazonS3Client( credentials, config );
+			if( !string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
+				AmazonS3Config config = new AmazonS3Config() {
+					RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint )
+				};
+				return new AmazonS3Client( credentials, config );
+			}
 
-			return client;
+			return new AmazonS3Client( credentials );
 		}
 
 		public void Dispose() {

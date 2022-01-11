@@ -31,10 +31,6 @@ namespace InjectableAWS {
 				throw new ArgumentException( $"{nameof( credentialsProvider )} must not be null.", nameof( credentialsProvider ) );
 			}
 
-			if( string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
-				throw new ArgumentException( $"{nameof( options.RegionEndpoint )} must not be null or empty.", nameof( options ) );
-			}
-
 			Client = CreateClient( credentialsProvider, options );
 			Context = new DynamoDBContext( Client );
 		}
@@ -55,12 +51,14 @@ namespace InjectableAWS {
 				);
 			}
 
-			AmazonDynamoDBConfig config = new AmazonDynamoDBConfig {
-				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint ),
-				LogMetrics = true,
-				DisableLogging = false
-			};
-			return new AmazonDynamoDBClient( credentials, config );
+			if( !string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
+				AmazonDynamoDBConfig config = new AmazonDynamoDBConfig {
+					RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint )
+				};
+				return new AmazonDynamoDBClient( credentials, config );
+			}
+
+			return new AmazonDynamoDBClient( credentials );
 		}
 
 		public void Dispose() {
