@@ -1,12 +1,13 @@
 <Project>
 	<PropertyGroup>
-		<ProductVersion>2.5.2</ProductVersion>
+		<ProductVersion>2.5.3</ProductVersion>
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<LangVersion>10.0</LangVersion>
-		<Nullable>Enable</Nullable>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
 		<Version Condition=" '$(ProductVersion)' == '' ">0.0.1</Version>
 		<Version Condition=" '$(ProductVersion)' != '' ">$(ProductVersion)</Version>
 	</PropertyGroup>
