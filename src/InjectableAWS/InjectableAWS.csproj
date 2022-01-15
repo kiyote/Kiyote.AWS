@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.1.85" />
-    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.2.8" />
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.2.12" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.7.10" />
     <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.1.104" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
