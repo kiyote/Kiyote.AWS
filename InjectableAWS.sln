@@ -19,6 +19,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{6890BA01-6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InjectableAWS.Tests", "test\InjectableAWS.Tests\InjectableAWS.Tests.csproj", "{93D1B21B-72C8-429C-B112-E1DF50D09836}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{A1885A2A-80B8-4742-A6CA-24B37644AF49}"
+	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{C55ED331-4DDB-4467-83C8-F983DFDA8909}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +50,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{F4325931-1EAA-4BCA-B1E9-EA851DAB41A2} = {42F6667F-D8DD-4BEC-A06E-D9184AE961BC}
 		{93D1B21B-72C8-429C-B112-E1DF50D09836} = {6890BA01-6164-4C18-9B86-5E03D9D3EB8A}
+		{A1885A2A-80B8-4742-A6CA-24B37644AF49} = {874C06B9-B7D8-45F8-A756-4A1110A617BE}
+		{C55ED331-4DDB-4467-83C8-F983DFDA8909} = {A1885A2A-80B8-4742-A6CA-24B37644AF49}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {00667DC1-B6D3-42BD-803E-D9B04C5E5F7D}
