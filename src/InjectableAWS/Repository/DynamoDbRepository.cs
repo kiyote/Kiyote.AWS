@@ -5,7 +5,7 @@ using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
 using InjectableAWS;
 
-public abstract class DynamoDbRepository<T> : IDynamoDbRepository where T : DynamoDbRepositoryOptions {
+public abstract class DynamoDbRepository<T> : IDynamoDbRepository<T> where T : DynamoDbRepositoryOptions {
 	private readonly DynamoDbContext<T> _context;
 	private readonly DynamoDBOperationConfig _config;
 	private readonly DynamoDBOperationConfig _searchConfig;

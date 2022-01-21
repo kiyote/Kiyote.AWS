@@ -1,6 +1,6 @@
 ﻿namespace InjectableAWS.Repository;
 
-public interface IDynamoDbRepository {
+public interface IDynamoDbRepository<T> where T : DynamoDbRepositoryOptions {
 	Task CreateAsync<TData>(
 		TData data,
 		CancellationToken cancellationToken
