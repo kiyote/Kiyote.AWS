@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.4.15" />
+    <PackageReference Include="AWSSDK.CognitoIdentityProvider" Version="3.7.4.17" />
     <PackageReference Include="AWSSDK.DynamoDBv2" Version="3.7.3.58" />
     <PackageReference Include="AWSSDK.S3" Version="3.7.9.25" />
     <PackageReference Include="AWSSDK.SecurityToken" Version="3.7.1.175" />
