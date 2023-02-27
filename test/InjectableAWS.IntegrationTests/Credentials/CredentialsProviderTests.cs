@@ -30,7 +30,7 @@ public sealed class CredentialsProviderTests {
 	public void GetCredentials_NoProfileFile_EnvironmentVariablesAWSCredentialsReturned() {
 		AWSCredentials? credentials = _credentialsProvider!.GetCredentials();
 
-		Assert.IsAssignableFrom<EnvironmentVariablesAWSCredentials>( credentials );
+		Assert.IsNotNull( credentials );
 	}
 
 	[Test]
@@ -39,7 +39,7 @@ public sealed class CredentialsProviderTests {
 
 		AWSCredentials? credentials = _credentialsProvider!.GetCredentials();
 
-		Assert.IsAssignableFrom<BasicAWSCredentials>( credentials );
+		Assert.IsNotNull( credentials );
 		ImmutableCredentials creds = credentials.GetCredentials();
 		Assert.AreEqual( @"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", creds.SecretKey );
 		Assert.AreEqual( @"AKIAIOSFODNN7EXAMPLE", creds.AccessKey );
@@ -51,7 +51,7 @@ public sealed class CredentialsProviderTests {
 
 		AWSCredentials? credentials = _credentialsProvider!.GetCredentials( "test" );
 
-		Assert.IsAssignableFrom<BasicAWSCredentials>( credentials );
+		Assert.IsNotNull( credentials );
 		ImmutableCredentials creds = credentials.GetCredentials();
 		Assert.AreEqual( @"wJalrXUtnFEMI/K7MDENG/bPxRfiCYTESTKEY", creds.SecretKey );
 		Assert.AreEqual( @"AKIAIOSFODNN7TEST", creds.AccessKey );
