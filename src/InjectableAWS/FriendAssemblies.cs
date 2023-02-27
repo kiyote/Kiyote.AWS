@@ -1,3 +1,4 @@
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo( "InjectableAWS.Tests" )]
+[assembly: InternalsVisibleTo( "InjectableAWS.IntegrationTests" )]
+[assembly: InternalsVisibleTo( "InjectableAWS.UnitTests" )]
