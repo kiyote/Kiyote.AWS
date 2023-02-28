@@ -9,14 +9,14 @@ public static class ExtensionMethods {
 	public static IServiceCollection AddCognito<T>(
 		this IServiceCollection services,
 		Action<CognitoOptions<T>>? configureOptions = null
-	) {
+	) where T: class {
 		// Ensure at least the basic credentials provider is available
 		services.TryAddSingleton<ICredentialsProvider, CredentialsProvider>();
 		services.TryAddSingleton<CredentialsProviderOptions>();
 
 		// Register the CognitoContext
 		services
-			.AddSingleton<CognitoContext<CognitoOptions<T>>>()
+			.AddSingleton<CognitoContext<T>>()
 			.AddSingleton<CognitoOptionsValidator<T>>()
 			.AddOptions<CognitoOptions<T>>()
 			.Configure( ( opts ) => {

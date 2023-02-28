@@ -111,3 +111,4 @@ dotnet_diagnostic.CA1054.severity	= none		# URI-like parameters should not be st
 dotnet_diagnostic.CA1056.severity	= none		# URI-like parameters should not be strings (yep, it's really two rules for the same thing)
 dotnet_diagnostic.CA1014.severity	= none		# Mark assemblies with CLSCompliant
 dotnet_diagnostic.CA1062.severity	= none		# Validate arguments of public methods (we use Nullable instead)
+dotnet_diagnostic.CA1812.severity	= none		# App is an internal class that is apparently never instantiated. (We use DI)

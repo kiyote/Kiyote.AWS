@@ -1,28 +1,29 @@
 ﻿using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
+using Microsoft.Extensions.Options;
 
 namespace InjectableAWS.DynamoDb.Repository;
 
-public abstract class DynamoDbRepository<T> : IDynamoDbRepository<T> where T : DynamoDbRepositoryOptions {
+public abstract class DynamoDbRepository<T> : IDynamoDbRepository<T> where T : class {
 	private readonly DynamoDbContext<T> _context;
 	private readonly DynamoDBOperationConfig _config;
 	private readonly DynamoDBOperationConfig _searchConfig;
 
 	protected DynamoDbRepository(
-		T options,
+		IOptions<DynamoDbRepositoryOptions<T>> options,
 		DynamoDbContext<T> context
 	) {
-		if( options is null ) {
+		if( options.Value is null ) {
 			throw new ArgumentNullException( nameof( options ) );
 		}
 
 		_context = context;
 		_config = new DynamoDBOperationConfig {
-			OverrideTableName = options.TableName
+			OverrideTableName = options.Value.TableName
 		};
 		_searchConfig = new DynamoDBOperationConfig {
-			OverrideTableName = options.TableName,
-			IndexName = options.IndexName
+			OverrideTableName = options.Value.TableName,
+			IndexName = options.Value.IndexName
 		};
 	}
 

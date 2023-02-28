@@ -9,14 +9,14 @@ public static class ExtensionMethods {
 	public static IServiceCollection AddDynamoDb<T>(
 		this IServiceCollection services,
 		Action<DynamoDbOptions<T>>? configureOptions = null
-	) {
+	) where T: class {
 		// Ensure at least the basic credentials provider is available
 		services.TryAddSingleton<ICredentialsProvider, CredentialsProvider>();
 		services.TryAddSingleton<CredentialsProviderOptions>();
 
 		// Register the DynamoDbContext
 		services
-			.AddSingleton<DynamoDbContext<DynamoDbOptions<T>>>()
+			.AddSingleton<DynamoDbContext<T>>()
 			.AddOptions<DynamoDbOptions<T>>()
 			.Configure( ( opts ) => {
 				if( configureOptions is not null ) {
