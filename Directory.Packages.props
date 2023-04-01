@@ -1,7 +1,7 @@
 <Project>
   <ItemGroup>
     <PackageVersion Include="AWSSDK.CognitoIdentityProvider" Version="3.7.101.79" />
-    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="3.7.101.50" />
+    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="3.7.102.17" />
     <PackageVersion Include="AWSSDK.S3" Version="3.7.103.15" />
     <PackageVersion Include="AWSSDK.SecurityToken" Version="3.7.101.14" />
     <PackageVersion Include="coverlet.collector" Version="3.2.0" />
@@ -20,8 +20,8 @@
   <ItemGroup>
     <PackageVersion Update="AWSSDK.CognitoIdentityProvider" Version="3.7.101.82" />
     <PackageVersion Update="AWSSDK.CognitoIdentityProvider" Version="3.7.101.91" />
-    <PackageVersion Update="AWSSDK.DynamoDBv2" Version="3.7.101.53" />
-    <PackageVersion Update="AWSSDK.DynamoDBv2" Version="3.7.102.5" />
+    <PackageVersion Update="AWSSDK.DynamoDBv2" Version="3.7.102.17" />
+    <PackageVersion Update="AWSSDK.DynamoDBv2" Version="3.7.102.17" />
     <PackageVersion Update="AWSSDK.S3" Version="3.7.103.19" />
     <PackageVersion Update="AWSSDK.S3" Version="3.7.103.28" />
     <PackageVersion Update="AWSSDK.SecurityToken" Version="3.7.101.17" />
