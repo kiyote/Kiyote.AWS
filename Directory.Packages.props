@@ -20,12 +20,20 @@
   <ItemGroup>
     <PackageVersion Update="AWSSDK.CognitoIdentityProvider" Version="3.7.101.103" />
     <PackageVersion Update="AWSSDK.CognitoIdentityProvider" Version="3.7.101.103" />
+    <PackageVersion Update="AWSSDK.CognitoIdentityProvider" Version="3.7.101.114" />
+    <PackageVersion Update="AWSSDK.CognitoIdentityProvider" Version="3.7.101.114" />
     <PackageVersion Update="AWSSDK.DynamoDBv2" Version="3.7.101.53" />
     <PackageVersion Update="AWSSDK.DynamoDBv2" Version="3.7.102.5" />
+    <PackageVersion Update="AWSSDK.DynamoDBv2" Version="3.7.102.28" />
+    <PackageVersion Update="AWSSDK.DynamoDBv2" Version="3.7.102.28" />
     <PackageVersion Update="AWSSDK.S3" Version="3.7.103.19" />
     <PackageVersion Update="AWSSDK.S3" Version="3.7.103.28" />
+    <PackageVersion Update="AWSSDK.S3" Version="3.7.103.51" />
+    <PackageVersion Update="AWSSDK.S3" Version="3.7.103.51" />
     <PackageVersion Update="AWSSDK.SecurityToken" Version="3.7.101.17" />
     <PackageVersion Update="AWSSDK.SecurityToken" Version="3.7.101.26" />
+    <PackageVersion Update="AWSSDK.SecurityToken" Version="3.7.101.49" />
+    <PackageVersion Update="AWSSDK.SecurityToken" Version="3.7.101.49" />
     <PackageVersion Update="NUnit3TestAdapter" Version="4.4.2" />
     <PackageVersion Update="NUnit3TestAdapter" Version="4.4.2" />
   </ItemGroup>
