@@ -8,7 +8,8 @@ on:
       - '**.csproj'
       - '**.sln'
       - '.editorconfig'
-      - '.Build.props'
+      - '**.Build.props'
+      - '**.Packages.props'
       - '.github/workflows/ci.yml'
   pull_request:
     paths:
@@ -16,7 +17,8 @@ on:
       - '**.csproj'
       - '**.sln'
       - '.editorconfig'
-      - '.Build.props'
+      - '**.Build.props'
+      - '**.Packages.props'
       - '.github/workflows/ci.yml'
 
 jobs:
