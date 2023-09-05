@@ -2,7 +2,7 @@
   <ItemGroup>
     <PackageVersion Include="AWSSDK.CognitoIdentityProvider" Version="3.7.202.4" />
     <PackageVersion Include="AWSSDK.DynamoDBv2" Version="3.7.201.2" />
-    <PackageVersion Include="AWSSDK.S3" Version="3.7.104.25" />
+    <PackageVersion Include="AWSSDK.S3" Version="3.7.203.7" />
     <PackageVersion Include="AWSSDK.SecurityToken" Version="3.7.201.28" />
     <PackageVersion Include="coverlet.collector" Version="6.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
