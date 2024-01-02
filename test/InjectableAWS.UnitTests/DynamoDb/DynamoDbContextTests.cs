@@ -50,8 +50,8 @@ public sealed class DynamoDbContextTests {
 		AWSConfigs.AWSRegion = "us-east-1";
 		SetupContext();
 
-		Assert.IsNotNull( _context!.Client );
-		Assert.IsNotNull( _context!.Context );
+		Assert.That( _context!.Client, Is.Not.Null );
+		Assert.That( _context!.Context, Is.Not.Null );
 	}
 
 	[Test]
@@ -74,8 +74,8 @@ public sealed class DynamoDbContextTests {
 			role: role
 		);
 
-		Assert.IsNotNull( _context!.Client );
-		Assert.IsNotNull( _context!.Context );
+		Assert.That( _context!.Client, Is.Not.Null );
+		Assert.That( _context!.Context, Is.Not.Null );
 	}
 
 	private void SetupContext(

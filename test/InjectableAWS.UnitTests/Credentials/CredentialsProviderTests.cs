@@ -38,7 +38,7 @@ internal class CredentialsProviderTests {
 		string? role = "role";
 		AWSCredentials? assumedCredentials = _provider!.AssumeRole( credentials, role );
 
-		Assert.IsAssignableFrom<AssumeRoleAWSCredentials>( assumedCredentials );
+		Assert.That( assumedCredentials, Is.AssignableFrom<AssumeRoleAWSCredentials>() );
 	}
 
 	private void ConfigureProvider(

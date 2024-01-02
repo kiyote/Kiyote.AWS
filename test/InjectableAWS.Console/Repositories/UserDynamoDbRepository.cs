@@ -11,7 +11,7 @@ public sealed class UserDynamoDbRepository : DynamoDbRepository<App> {
 
 	private readonly ILogger _logger;
 
-	private record UserRecord {
+	private sealed record UserRecord {
 		[DynamoDBHashKey( "PK" )]
 		public string? PK { get; init; }
 		[DynamoDBRangeKey( "SK" )]
