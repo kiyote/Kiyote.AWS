@@ -12,14 +12,14 @@ public sealed class ExtensionMethodsTests {
 		var serviceCollection = new ServiceCollection();
 		CredentialsProviderOptions? configuredOptions = null;
 		serviceCollection.AddDefaultCredentials( ( opts ) => {
-			Assert.IsNotNull( opts );
+			Assert.That( opts, Is.Not.Null );
 			opts.CredentialsFile = filename;
 			configuredOptions = opts;
 		} );
 		IServiceProvider services = serviceCollection.BuildServiceProvider();
 		IOptions<CredentialsProviderOptions> options = services.GetRequiredService<IOptions<CredentialsProviderOptions>>();
-		Assert.AreEqual( filename, options.Value.CredentialsFile );
-		Assert.AreSame( configuredOptions, options.Value );
+		Assert.That( options.Value.CredentialsFile, Is.EqualTo( filename ) );
+		Assert.That( options.Value, Is.SameAs( configuredOptions ) );
 	}
 }
 

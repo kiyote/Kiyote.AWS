@@ -58,13 +58,13 @@ public sealed class CognitoContextTests {
 			role: role
 		);
 
-		Assert.IsNotNull( _context!.Provider );
+		Assert.That( _context!.Provider, Is.Not.Null );
 	}
 
 	[Test]
 	public void Ctor_DefaultCredentials_ProviderCreated() {
 
-		BasicAWSCredentials credentials = new BasicAWSCredentials( "accessKey", "secretKey" ) {			
+		BasicAWSCredentials credentials = new BasicAWSCredentials( "accessKey", "secretKey" ) {
 		};
 		AWSConfigs.AWSRegion = "us-east-1";
 		_credentialsProvider!
@@ -73,7 +73,7 @@ public sealed class CognitoContextTests {
 
 		SetupContext();
 
-		Assert.IsNotNull( _context!.Provider );
+		Assert.That( _context!.Provider, Is.Not.Null );
 	}
 
 	private void SetupContext(

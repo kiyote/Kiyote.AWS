@@ -45,7 +45,7 @@ public sealed class S3ContextTests {
 		AWSConfigs.AWSRegion = "us-east-1";
 		SetupContext();
 
-		Assert.IsNotNull( _context!.Client );
+		Assert.That( _context!.Client, Is.Not.Null );
 	}
 
 	[Test]
@@ -68,7 +68,7 @@ public sealed class S3ContextTests {
 			role: role
 		);
 
-		Assert.IsNotNull( _context!.Client );
+		Assert.That( _context!.Client, Is.Not.Null );
 	}
 
 	private void SetupContext(

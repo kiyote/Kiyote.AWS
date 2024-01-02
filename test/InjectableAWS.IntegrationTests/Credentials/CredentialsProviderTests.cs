@@ -30,7 +30,7 @@ public sealed class CredentialsProviderTests {
 	public void GetCredentials_NoProfileFile_EnvironmentVariablesAWSCredentialsReturned() {
 		AWSCredentials? credentials = _credentialsProvider!.GetCredentials();
 
-		Assert.IsNotNull( credentials );
+		Assert.That( credentials, Is.Not.Null );
 	}
 
 	[Test]
@@ -39,10 +39,10 @@ public sealed class CredentialsProviderTests {
 
 		AWSCredentials? credentials = _credentialsProvider!.GetCredentials();
 
-		Assert.IsNotNull( credentials );
+		Assert.That( credentials, Is.Not.Null );
 		ImmutableCredentials creds = credentials.GetCredentials();
-		Assert.AreEqual( @"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY", creds.SecretKey );
-		Assert.AreEqual( @"AKIAIOSFODNN7EXAMPLE", creds.AccessKey );
+		Assert.That( creds.SecretKey, Is.EqualTo( @"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" ) );
+		Assert.That( creds.AccessKey, Is.EqualTo( @"AKIAIOSFODNN7EXAMPLE" ) );
 	}
 
 	[Test]
@@ -51,10 +51,10 @@ public sealed class CredentialsProviderTests {
 
 		AWSCredentials? credentials = _credentialsProvider!.GetCredentials( "test" );
 
-		Assert.IsNotNull( credentials );
+		Assert.That( credentials, Is.Not.Null );
 		ImmutableCredentials creds = credentials.GetCredentials();
-		Assert.AreEqual( @"wJalrXUtnFEMI/K7MDENG/bPxRfiCYTESTKEY", creds.SecretKey );
-		Assert.AreEqual( @"AKIAIOSFODNN7TEST", creds.AccessKey );
+		Assert.That( creds.SecretKey, Is.EqualTo( @"wJalrXUtnFEMI/K7MDENG/bPxRfiCYTESTKEY" ) );
+		Assert.That( creds.AccessKey, Is.EqualTo( @"AKIAIOSFODNN7TEST" ) );
 	}
 
 	[Test]

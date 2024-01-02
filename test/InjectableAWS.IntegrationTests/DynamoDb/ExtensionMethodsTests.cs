@@ -15,7 +15,7 @@ public sealed class ExtensionMethodsTests {
 		DynamoDbOptions<ExtensionMethodsTests>? configuredOptions = null;
 
 		serviceCollection.AddDynamoDb<ExtensionMethodsTests>( ( opts ) => {
-			Assert.IsNotNull( opts );
+			Assert.That( opts, Is.Not.Null );
 			opts.CredentialsProfile = credentialsProfile;
 			opts.Role = role;
 			opts.RegionEndpoint = regionEndpoint;
@@ -24,10 +24,10 @@ public sealed class ExtensionMethodsTests {
 		IServiceProvider services = serviceCollection.BuildServiceProvider();
 
 		IOptions<DynamoDbOptions<ExtensionMethodsTests>> options = services.GetRequiredService<IOptions<DynamoDbOptions<ExtensionMethodsTests>>>();
-		Assert.AreEqual( credentialsProfile, options.Value.CredentialsProfile );
-		Assert.AreEqual( role, options.Value.Role );
-		Assert.AreEqual( regionEndpoint, options.Value.RegionEndpoint );
-		Assert.AreSame( configuredOptions, options.Value );
+		Assert.That( options.Value.CredentialsProfile, Is.EqualTo( credentialsProfile ) );
+		Assert.That( options.Value.Role, Is.EqualTo( role ) );
+		Assert.That( options.Value.RegionEndpoint, Is.EqualTo( regionEndpoint ) );
+		Assert.That( options.Value, Is.SameAs( configuredOptions ) );
 	}
 }
 
