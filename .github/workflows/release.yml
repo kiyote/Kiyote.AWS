@@ -20,7 +20,7 @@ jobs:
           global-json-file: global.json
 
       - name: Setup NuGet
-        uses: NuGet/setup-nuget@v1
+        uses: NuGet/setup-nuget@v2
 
       - name: Restore
         run: nuget restore
