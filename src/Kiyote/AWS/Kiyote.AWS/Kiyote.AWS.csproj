@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Authors>Todd Lang</Authors>
+		<Company>Todd Lang</Company>
+		<Description>Provides helper methods and classes to easily create AWS service clients that are for use in DI systems.</Description>
+		<Copyright>© 2020-2023 Todd Lang</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AWSSDK.CognitoIdentityProvider" />
+		<PackageReference Include="AWSSDK.DynamoDBv2" />
+		<PackageReference Include="AWSSDK.S3" />
+		<PackageReference Include="AWSSDK.SecurityToken" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+	</ItemGroup>
+
+</Project>

@@ -5,7 +5,10 @@
 
 **/credentials.txt
 **/appsettings.development.json
-**/addlocal.bat
+addlocal.bat
+.config
+coverage.xml
+global.json
 
 # User-specific files
 *.rsuser
