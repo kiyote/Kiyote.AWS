@@ -1,30 +1,36 @@
-﻿using Amazon;
+using Amazon;
 using Amazon.Runtime;
-using Amazon.SecretsManager;
+using Amazon.S3;
+using Amazon.S3.Model;
 using Kiyote.AWS.Credentials;
 using Microsoft.Extensions.Options;
 
-namespace Kiyote.AWS.SecretsManager;
+namespace Kiyote.AWS.S3;
 
-public sealed class SecretsManagerContext<T> : IDisposable where T: class {
+internal sealed partial class AmazonS3Context<T> : IAmazonS3<T> where T: class {
 
 	private bool _disposed;
 
-	public SecretsManagerContext(
+	public AmazonS3Context(
 		ICredentialsProvider credentialsProvider,
-		IOptions<SecretsManagerOptions<T>> options
+		IOptions<S3Options<T>> options
 	) {
-		Manager = CreateSecretsManager(
-			credentialsProvider,
-			options.Value
-		);
+		if( options.Value is null ) {
+			throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
+		}
+
+		Client = CreateS3Client( credentialsProvider, options.Value );
 	}
 
-	public IAmazonSecretsManager Manager { get; }
+	public IAmazonS3 Client { get; }
 
-	private static IAmazonSecretsManager CreateSecretsManager(
+	IS3PaginatorFactory IAmazonS3.Paginators => throw new NotImplementedException();
+
+	IClientConfig IAmazonService.Config => throw new NotImplementedException();
+
+	private static IAmazonS3 CreateS3Client(
 		ICredentialsProvider credentialsProvider,
-		SecretsManagerOptions<T> options
+		S3Options<T> options
 	) {
 		AWSCredentials credentials = credentialsProvider.GetCredentials( options.CredentialsProfile );
 		if( !string.IsNullOrWhiteSpace( options.Role ) ) {
@@ -35,13 +41,13 @@ public sealed class SecretsManagerContext<T> : IDisposable where T: class {
 		}
 
 		if( !string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
-			AmazonSecretsManagerConfig config = new AmazonSecretsManagerConfig{
+			AmazonS3Config config = new AmazonS3Config() {
 				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint )
 			};
-			return new AmazonSecretsManagerClient( credentials, config );
+			return new AmazonS3Client( credentials, config );
 		}
 
-		return new AmazonSecretsManagerClient( credentials );
+		return new AmazonS3Client( credentials );
 	}
 
 	public void Dispose() {
@@ -55,7 +61,7 @@ public sealed class SecretsManagerContext<T> : IDisposable where T: class {
 		}
 
 		if( disposing ) {
-			Manager.Dispose();
+			Client.Dispose();
 		}
 
 		_disposed = true;

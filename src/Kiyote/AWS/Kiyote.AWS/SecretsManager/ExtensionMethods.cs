@@ -16,7 +16,7 @@ public static class ExtensionMethods {
 
 		// Register the SecretsManagerContext
 		_ = services
-			.AddSingleton<SecretsManagerContext<T>>()
+			.AddSingleton<AmazonSecretsManagerContext<T>>()
 			.AddSingleton<SecretsManagerOptionsValidator<T>>()
 			.AddOptions<SecretsManagerOptions<T>>()
 			.Configure( ( opts ) => {

@@ -7,7 +7,7 @@ public sealed class S3ContextTests {
 
 	private Mock<ICredentialsProvider>? _credentialsProvider;
 	private Mock<IOptions<S3Options<S3ContextTests>>>? _options;
-	private S3Context<S3ContextTests>? _context;
+	private AmazonS3Context<S3ContextTests>? _context;
 
 	[SetUp]
 	public void SetUp() {
@@ -26,7 +26,7 @@ public sealed class S3ContextTests {
 
 	[Test]
 	public void Ctor_NullOptions_ThrowsException() {
-		Assert.Throws<ArgumentException>( () => new S3Context<S3ContextTests>(
+		Assert.Throws<ArgumentException>( () => new AmazonS3Context<S3ContextTests>(
 			_credentialsProvider!.Object,
 			new NullOptions<S3Options<S3ContextTests>>()
 		) );
@@ -81,7 +81,7 @@ public sealed class S3ContextTests {
 			.Setup( o => o.Value )
 			.Returns( options );
 
-		_context = new S3Context<S3ContextTests>(
+		_context = new AmazonS3Context<S3ContextTests>(
 			_credentialsProvider!.Object,
 			_options!.Object
 		);

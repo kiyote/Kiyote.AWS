@@ -16,7 +16,7 @@ public static class ExtensionMethods {
 
 		// Register the S3Context
 		services
-			.AddSingleton<S3Context<T>>()
+			.AddSingleton<AmazonS3Context<T>>()
 			.AddOptions<S3Options<T>>()
 			.Configure( ( opts ) => {
 				if( configureOptions is not null ) {

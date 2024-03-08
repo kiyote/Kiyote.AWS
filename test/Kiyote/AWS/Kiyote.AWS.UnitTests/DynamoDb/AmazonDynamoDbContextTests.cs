@@ -3,15 +3,15 @@
 namespace Kiyote.AWS.DynamoDb.UnitTests;
 
 [TestFixture]
-public sealed class DynamoDbContextTests {
+public sealed class AmazonDynamoDbContextTests {
 
 	private Mock<ICredentialsProvider>? _credentialsProvider;
-	private Mock<IOptions<DynamoDbOptions<DynamoDbContextTests>>>? _options;
-	private DynamoDbContext<DynamoDbContextTests>? _context;
+	private Mock<IOptions<DynamoDbOptions<AmazonDynamoDbContextTests>>>? _options;
+	private AmazonDynamoDbContext<AmazonDynamoDbContextTests>? _context;
 
 	[SetUp]
 	public void SetUp() {
-		_options = new Mock<IOptions<DynamoDbOptions<DynamoDbContextTests>>>( MockBehavior.Strict );
+		_options = new Mock<IOptions<DynamoDbOptions<AmazonDynamoDbContextTests>>>( MockBehavior.Strict );
 		_credentialsProvider = new Mock<ICredentialsProvider>( MockBehavior.Strict );
 	}
 
@@ -26,9 +26,9 @@ public sealed class DynamoDbContextTests {
 
 	[Test]
 	public void Ctor_NullOptions_ThrowsException() {
-		Assert.Throws<ArgumentException>( () => new DynamoDbContext<DynamoDbContextTests>(
+		Assert.Throws<ArgumentException>( () => new AmazonDynamoDbContext<AmazonDynamoDbContextTests>(
 			_credentialsProvider!.Object,
-			new NullOptions<DynamoDbOptions<DynamoDbContextTests>>()
+			new NullOptions<DynamoDbOptions<AmazonDynamoDbContextTests>>()
 		) );
 	}
 
@@ -42,7 +42,6 @@ public sealed class DynamoDbContextTests {
 		SetupContext();
 
 		Assert.That( _context!.Client, Is.Not.Null );
-		Assert.That( _context!.Context, Is.Not.Null );
 	}
 
 	[Test]
@@ -66,7 +65,6 @@ public sealed class DynamoDbContextTests {
 		);
 
 		Assert.That( _context!.Client, Is.Not.Null );
-		Assert.That( _context!.Context, Is.Not.Null );
 	}
 
 	private void SetupContext(
@@ -74,7 +72,7 @@ public sealed class DynamoDbContextTests {
 		string? regionEndpoint = null,
 		string? role = null
 	) {
-		DynamoDbOptions<DynamoDbContextTests> options = new DynamoDbOptions<DynamoDbContextTests> {
+		DynamoDbOptions<AmazonDynamoDbContextTests> options = new DynamoDbOptions<AmazonDynamoDbContextTests> {
 			CredentialsProfile = credentialsProfile,
 			RegionEndpoint = regionEndpoint,
 			Role = role
@@ -83,7 +81,7 @@ public sealed class DynamoDbContextTests {
 			.Setup( o => o.Value )
 			.Returns( options );
 
-		_context = new DynamoDbContext<DynamoDbContextTests>(
+		_context = new AmazonDynamoDbContext<AmazonDynamoDbContextTests>(
 			_credentialsProvider!.Object,
 			_options!.Object
 		);

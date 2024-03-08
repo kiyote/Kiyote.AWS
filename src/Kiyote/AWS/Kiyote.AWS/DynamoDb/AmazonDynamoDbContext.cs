@@ -1,31 +1,31 @@
 using Amazon;
+using Amazon.DynamoDBv2;
 using Amazon.Runtime;
-using Amazon.S3;
 using Kiyote.AWS.Credentials;
 using Microsoft.Extensions.Options;
 
-namespace Kiyote.AWS.S3;
+namespace Kiyote.AWS.DynamoDb;
 
-public sealed class S3Context<T> : IDisposable {
+internal sealed partial class AmazonDynamoDbContext<T> : IAmazonDynamoDB<T> where T: class {
 
 	private bool _disposed;
 
-	public S3Context(
+	public AmazonDynamoDbContext(
 		ICredentialsProvider credentialsProvider,
-		IOptions<S3Options<T>> options
+		IOptions<DynamoDbOptions<T>> options
 	) {
 		if( options.Value is null ) {
 			throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
 		}
 
-		Client = CreateS3Client( credentialsProvider, options.Value );
+		Client = CreateClient( credentialsProvider, options.Value );
 	}
 
-	public IAmazonS3 Client { get; }
+	public IAmazonDynamoDB Client { get; }
 
-	private static IAmazonS3 CreateS3Client(
+	private static IAmazonDynamoDB CreateClient(
 		ICredentialsProvider credentialsProvider,
-		S3Options<T> options
+		DynamoDbOptions<T> options
 	) {
 		AWSCredentials credentials = credentialsProvider.GetCredentials( options.CredentialsProfile );
 		if( !string.IsNullOrWhiteSpace( options.Role ) ) {
@@ -36,13 +36,13 @@ public sealed class S3Context<T> : IDisposable {
 		}
 
 		if( !string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
-			AmazonS3Config config = new AmazonS3Config() {
+			AmazonDynamoDBConfig config = new AmazonDynamoDBConfig {
 				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint )
 			};
-			return new AmazonS3Client( credentials, config );
+			return new AmazonDynamoDBClient( credentials, config );
 		}
 
-		return new AmazonS3Client( credentials );
+		return new AmazonDynamoDBClient( credentials );
 	}
 
 	public void Dispose() {
@@ -61,4 +61,5 @@ public sealed class S3Context<T> : IDisposable {
 
 		_disposed = true;
 	}
+
 }

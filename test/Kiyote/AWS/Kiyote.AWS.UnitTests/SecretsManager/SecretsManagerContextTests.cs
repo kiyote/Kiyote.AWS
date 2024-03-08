@@ -7,7 +7,7 @@ public sealed class SecretsManagerContextTests {
 
 	private Mock<ICredentialsProvider>? _credentialsProvider;
 	private Mock<IOptions<SecretsManagerOptions<SecretsManagerContextTests>>>? _options;
-	private SecretsManagerContext<SecretsManagerContextTests>? _context;
+	private AmazonSecretsManagerContext<SecretsManagerContextTests>? _context;
 
 	[SetUp]
 	public void SetUp() {
@@ -76,7 +76,7 @@ public sealed class SecretsManagerContextTests {
 			.Setup( o => o.Value )
 			.Returns( options );
 
-		_context = new SecretsManagerContext<SecretsManagerContextTests>(
+		_context = new AmazonSecretsManagerContext<SecretsManagerContextTests>(
 			_credentialsProvider!.Object,
 			_options.Object
 		);

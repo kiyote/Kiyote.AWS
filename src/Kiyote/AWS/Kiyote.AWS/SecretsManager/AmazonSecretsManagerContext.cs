@@ -1,31 +1,32 @@
-using Amazon;
-using Amazon.CognitoIdentityProvider;
+﻿using Amazon;
 using Amazon.Runtime;
+using Amazon.Runtime.Endpoints;
+using Amazon.SecretsManager;
+using Amazon.SecretsManager.Model;
 using Kiyote.AWS.Credentials;
 using Microsoft.Extensions.Options;
 
-namespace Kiyote.AWS.Cognito;
+namespace Kiyote.AWS.SecretsManager;
 
-public sealed class CognitoContext<T> : IDisposable where T : class {
+internal sealed partial class AmazonSecretsManagerContext<T> : IAmazonSecretsManager<T> where T: class {
 
 	private bool _disposed;
 
-	public CognitoContext(
+	public AmazonSecretsManagerContext(
 		ICredentialsProvider credentialsProvider,
-		IOptions<CognitoOptions<T>> options
+		IOptions<SecretsManagerOptions<T>> options
 	) {
-		if( options.Value is null ) {
-			throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
-		}
-
-		Provider = CreateCognitoProvider( credentialsProvider, options.Value );
+		Manager = CreateSecretsManager(
+			credentialsProvider,
+			options.Value
+		);
 	}
 
-	public IAmazonCognitoIdentityProvider Provider { get; }
+	public IAmazonSecretsManager Manager { get; }
 
-	private static IAmazonCognitoIdentityProvider CreateCognitoProvider(
+	private static IAmazonSecretsManager CreateSecretsManager(
 		ICredentialsProvider credentialsProvider,
-		CognitoOptions<T> options
+		SecretsManagerOptions<T> options
 	) {
 		AWSCredentials credentials = credentialsProvider.GetCredentials( options.CredentialsProfile );
 		if( !string.IsNullOrWhiteSpace( options.Role ) ) {
@@ -36,13 +37,13 @@ public sealed class CognitoContext<T> : IDisposable where T : class {
 		}
 
 		if( !string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
-			AmazonCognitoIdentityProviderConfig config = new AmazonCognitoIdentityProviderConfig {
+			AmazonSecretsManagerConfig config = new AmazonSecretsManagerConfig{
 				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint )
 			};
-			return new AmazonCognitoIdentityProviderClient( credentials, config );
+			return new AmazonSecretsManagerClient( credentials, config );
 		}
 
-		return new AmazonCognitoIdentityProviderClient( credentials );
+		return new AmazonSecretsManagerClient( credentials );
 	}
 
 	public void Dispose() {
@@ -56,9 +57,10 @@ public sealed class CognitoContext<T> : IDisposable where T : class {
 		}
 
 		if( disposing ) {
-			Provider.Dispose();
+			Manager.Dispose();
 		}
 
 		_disposed = true;
 	}
+
 }
