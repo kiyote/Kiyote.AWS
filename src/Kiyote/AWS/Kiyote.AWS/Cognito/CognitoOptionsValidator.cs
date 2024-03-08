@@ -2,7 +2,7 @@
 
 namespace Kiyote.AWS.Cognito;
 
-internal sealed class CognitoOptionsValidator<T> : IValidateOptions<CognitoOptions<T>> {
+internal sealed class CognitoOptionsValidator<T> : IValidateOptions<CognitoOptions<T>> where T: class {
 	ValidateOptionsResult IValidateOptions<CognitoOptions<T>>.Validate(
 		string? name,
 		CognitoOptions<T> options

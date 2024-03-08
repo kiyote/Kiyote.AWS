@@ -1,8 +1,4 @@
-﻿using Amazon;
-using Amazon.Runtime;
-using Kiyote.AWS.Credentials;
-using Kiyote.AWS.Tests;
-using Microsoft.Extensions.Options;
+﻿using Kiyote.AWS.Credentials;
 
 namespace Kiyote.AWS.S3.UnitTests;
 

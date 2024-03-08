@@ -1,20 +1,18 @@
 ﻿using Kiyote.AWS.Credentials;
 
-namespace Kiyote.AWS.Cognito.UnitTests;
+namespace Kiyote.AWS.SecretsManager.UnitTests;
 
 [TestFixture]
-public sealed class CognitoContextTests {
-
-	public const string ClientId = "client_id";
+public sealed class SecretsManagerContextTests {
 
 	private Mock<ICredentialsProvider>? _credentialsProvider;
-	private Mock<IOptions<CognitoOptions<CognitoContextTests>>>? _options;
-	private CognitoContext<CognitoContextTests>? _context;
+	private Mock<IOptions<SecretsManagerOptions<SecretsManagerContextTests>>>? _options;
+	private SecretsManagerContext<SecretsManagerContextTests>? _context;
 
 	[SetUp]
 	public void SetUp() {
 		_credentialsProvider = new Mock<ICredentialsProvider>( MockBehavior.Strict );
-		_options = new Mock<IOptions<CognitoOptions<CognitoContextTests>>>( MockBehavior.Strict );
+		_options = new Mock<IOptions<SecretsManagerOptions<SecretsManagerContextTests>>>( MockBehavior.Strict );
 	}
 
 	[TearDown]
@@ -24,14 +22,6 @@ public sealed class CognitoContextTests {
 
 		_context?.Dispose();
 		_context = null;
-	}
-
-	[Test]
-	public void Ctor_NullOptions_ThrowsArgumentException() {
-		Assert.Throws<ArgumentException>( () => new CognitoContext<CognitoContextTests>(
-			_credentialsProvider!.Object,
-			new NullOptions<CognitoOptions<CognitoContextTests>>()
-		) );
 	}
 
 	[Test]
@@ -54,7 +44,7 @@ public sealed class CognitoContextTests {
 			role: role
 		);
 
-		Assert.That( _context!.Provider, Is.Not.Null );
+		Assert.That( _context!.Manager, Is.Not.Null );
 	}
 
 	[Test]
@@ -69,17 +59,15 @@ public sealed class CognitoContextTests {
 
 		SetupContext();
 
-		Assert.That( _context!.Provider, Is.Not.Null );
+		Assert.That( _context!.Manager, Is.Not.Null );
 	}
 
 	private void SetupContext(
-		string clientId = ClientId,
 		string? regionEndpoint = null,
 		string? credentialsProfile = null,
 		string? role = null
 	) {
-		CognitoOptions<CognitoContextTests> options = new CognitoOptions<CognitoContextTests> {
-			ClientId = clientId,
+		SecretsManagerOptions<SecretsManagerContextTests> options = new SecretsManagerOptions<SecretsManagerContextTests> {
 			RegionEndpoint = regionEndpoint,
 			CredentialsProfile = credentialsProfile,
 			Role = role
@@ -88,7 +76,7 @@ public sealed class CognitoContextTests {
 			.Setup( o => o.Value )
 			.Returns( options );
 
-		_context = new CognitoContext<CognitoContextTests>(
+		_context = new SecretsManagerContext<SecretsManagerContextTests>(
 			_credentialsProvider!.Object,
 			_options.Object
 		);

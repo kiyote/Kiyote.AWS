@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-
-namespace Kiyote.AWS.Credentials.IntegrationTests;
+﻿namespace Kiyote.AWS.Credentials.IntegrationTests;
 
 [TestFixture]
 public sealed class ExtensionMethodsTests {

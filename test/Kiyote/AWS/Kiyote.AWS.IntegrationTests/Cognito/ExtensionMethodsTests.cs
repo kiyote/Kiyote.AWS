@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-
-namespace Kiyote.AWS.Cognito.IntegrationTests;
+﻿namespace Kiyote.AWS.Cognito.IntegrationTests;
 
 [TestFixture]
 public sealed class ExtensionMethodsTests {
