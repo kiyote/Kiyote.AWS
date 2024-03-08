@@ -16,7 +16,8 @@ public static class ExtensionMethods {
 
 		// Register the DynamoDbContext
 		services
-			.AddSingleton<DynamoDbContext<T>>()
+			.AddSingleton<IAmazonDynamoDB<T>, AmazonDynamoDbContext<T>>()
+			.AddSingleton<IDynamoDBContext<T>, DynamoDbContextContext<T>>()
 			.AddOptions<DynamoDbOptions<T>>()
 			.Configure( ( opts ) => {
 				if( configureOptions is not null ) {
