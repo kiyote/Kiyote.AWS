@@ -1,8 +1,4 @@
-﻿using Amazon.Runtime;
-using Kiyote.AWS.Tests;
-using Microsoft.Extensions.Options;
-
-namespace Kiyote.AWS.Credentials.UnitTests;
+﻿namespace Kiyote.AWS.Credentials.UnitTests;
 
 [TestFixture]
 internal class CredentialsProviderTests {

@@ -1,6 +1,4 @@
 ﻿using Amazon.Runtime;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 namespace Kiyote.AWS.Credentials.IntegrationTests;
 
