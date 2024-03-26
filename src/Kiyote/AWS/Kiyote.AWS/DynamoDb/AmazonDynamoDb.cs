@@ -403,4 +403,17 @@ internal sealed partial class AmazonDynamoDbContext<T> {
 	Task<UpdateTimeToLiveResponse> IAmazonDynamoDB.UpdateTimeToLiveAsync( UpdateTimeToLiveRequest request, CancellationToken cancellationToken ) {
 		return Client.UpdateTimeToLiveAsync( request, cancellationToken );
 	}
+
+	Task<GetResourcePolicyResponse> IAmazonDynamoDB.GetResourcePolicyAsync( GetResourcePolicyRequest request, CancellationToken cancellationToken ) {
+		return Client.GetResourcePolicyAsync( request, cancellationToken );
+	}
+
+	Task<PutResourcePolicyResponse> IAmazonDynamoDB.PutResourcePolicyAsync( PutResourcePolicyRequest request, CancellationToken cancellationToken ) {
+		return Client.PutResourcePolicyAsync( request, cancellationToken );
+	}
+
+	Task<DeleteResourcePolicyResponse> IAmazonDynamoDB.DeleteResourcePolicyAsync( DeleteResourcePolicyRequest request, CancellationToken cancellationToken ) {
+		return Client.DeleteResourcePolicyAsync( request, cancellationToken );
+	}
+
 }

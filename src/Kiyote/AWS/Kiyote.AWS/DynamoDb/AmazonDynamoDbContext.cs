@@ -1,5 +1,6 @@
 using Amazon;
 using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.Model;
 using Amazon.Runtime;
 using Kiyote.AWS.Credentials;
 using Microsoft.Extensions.Options;
@@ -61,5 +62,4 @@ internal sealed partial class AmazonDynamoDbContext<T> : IAmazonDynamoDB<T> wher
 
 		_disposed = true;
 	}
-
 }
