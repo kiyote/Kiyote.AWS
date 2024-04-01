@@ -4,7 +4,7 @@
     <PackageVersion Include="AWSSDK.DynamoDBv2" Version="3.7.302.2" />
     <PackageVersion Include="AWSSDK.S3" Version="3.7.307.2" />
     <PackageVersion Include="AWSSDK.SecretsManager" Version="3.7.302.36" />
-    <PackageVersion Include="AWSSDK.SecurityToken" Version="3.7.300.62" />
+    <PackageVersion Include="AWSSDK.SecurityToken" Version="3.7.300.66" />
     <PackageVersion Include="coverlet.collector" Version="6.0.2" />
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
