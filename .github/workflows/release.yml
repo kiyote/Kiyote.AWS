@@ -6,10 +6,10 @@ on:
       - release/**
     
 env:
+  DOTNET_VERSION: 8.0.301
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{ github.workspace}}/nuget
-
 jobs:
   create_nuget:
     runs-on: ubuntu-latest
