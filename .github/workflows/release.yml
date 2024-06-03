@@ -4,12 +4,17 @@ on:
   create:
     branches: 
       - release/**
+
+defaults:
+  run:
+    shell: pwsh
     
 env:
   DOTNET_VERSION: 8.0.300
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{ github.workspace}}/nuget
+  
 jobs:
   create_nuget:
     runs-on: ubuntu-latest
@@ -40,6 +45,8 @@ jobs:
         path: ${{ env.NuGetDirectory }}
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
+    - name: Define global.json
+      run: dotnet new globaljson --sdk-version ${{ env.DOTNET_VERSION }}    
     - name: Publish NuGet package
       run: |
         foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
