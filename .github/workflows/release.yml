@@ -6,7 +6,7 @@ on:
       - release/**
     
 env:
-  DOTNET_VERSION: 8.0.301
+  DOTNET_VERSION: 8.0.300
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
   DOTNET_NOLOGO: true
   NuGetDirectory: ${{ github.workspace}}/nuget
