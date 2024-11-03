@@ -117,3 +117,6 @@ dotnet_diagnostic.CA1014.severity	= none		# Mark assemblies with CLSCompliant
 dotnet_diagnostic.CA1062.severity	= none		# Validate arguments of public methods (we use Nullable instead)
 dotnet_diagnostic.CA1812.severity	= none		# App is an internal class that is apparently never instantiated. (We use DI)
 dotnet_diagnostic.CA1859.severity	= none		# Use concrete return type instead of interface for performance
+dotnet_diagnostic.CS3002.severity	= none		# Return type is not CLS-compliant
+dotnet_diagnostic.CS3001.severity	= none		# Argument type is not CLS-compliant
+dotnet_diagnostic.CS3027.severity	= none		# Base type is not CLS-compliant
