@@ -107,6 +107,9 @@ csharp_preserve_single_line_blocks                                       = true 
 dotnet_diagnostic.CA2300.severity   = error     # Do not use insecure deserializer BinaryFormatter
 dotnet_diagnostic.IDE0090.severity  = none      # Use new(...)
 dotnet_diagnostic.IDE0290.severity  = none      # Use primary constructor
+dotnet_diagnostic.CS3027.severity	= none		# Class not CLS compliant
+dotnet_diagnostic.CS3001.severity	= none		# Class not CLS compliant
+dotnet_diagnostic.CS3002.severity	= none		# Class not CLS compliant
 
 dotnet_diagnostic.CA1054.severity	= none		# URI-like parameters should not be strings (yes, 1056 is the same thing)
 dotnet_diagnostic.CA1056.severity	= none		# URI-like parameters should not be strings (yep, it's really two rules for the same thing)
