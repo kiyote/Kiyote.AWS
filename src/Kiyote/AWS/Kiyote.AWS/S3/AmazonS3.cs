@@ -789,4 +789,19 @@ internal sealed partial class AmazonS3Context<T> {
 	Task<WriteGetObjectResponseResponse> IAmazonS3.WriteGetObjectResponseAsync( WriteGetObjectResponseRequest request, CancellationToken cancellationToken ) {
 		return Client.WriteGetObjectResponseAsync( request, cancellationToken );
 	}
+
+	[ExcludeFromCodeCoverage]
+	Task<CreateBucketMetadataTableConfigurationResponse> IAmazonS3.CreateBucketMetadataTableConfigurationAsync( CreateBucketMetadataTableConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.CreateBucketMetadataTableConfigurationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DeleteBucketMetadataTableConfigurationResponse> IAmazonS3.DeleteBucketMetadataTableConfigurationAsync( DeleteBucketMetadataTableConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.DeleteBucketMetadataTableConfigurationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<GetBucketMetadataTableConfigurationResponse> IAmazonS3.GetBucketMetadataTableConfigurationAsync( GetBucketMetadataTableConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.GetBucketMetadataTableConfigurationAsync( request, cancellationToken );
+	}
 }

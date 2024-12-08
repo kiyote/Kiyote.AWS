@@ -534,4 +534,53 @@ internal sealed partial class AmazonCognitoIdentityProviderContext<T> {
 		return Provider.VerifyUserAttributeAsync( request, cancellationToken );
 	}
 
+	[ExcludeFromCodeCoverage]
+	Task<CompleteWebAuthnRegistrationResponse> IAmazonCognitoIdentityProvider.CompleteWebAuthnRegistrationAsync( CompleteWebAuthnRegistrationRequest request, CancellationToken cancellationToken ) {
+		return Provider.CompleteWebAuthnRegistrationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<CreateManagedLoginBrandingResponse> IAmazonCognitoIdentityProvider.CreateManagedLoginBrandingAsync( CreateManagedLoginBrandingRequest request, CancellationToken cancellationToken ) {
+		return Provider.CreateManagedLoginBrandingAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DeleteManagedLoginBrandingResponse> IAmazonCognitoIdentityProvider.DeleteManagedLoginBrandingAsync( DeleteManagedLoginBrandingRequest request, CancellationToken cancellationToken ) {
+		return Provider.DeleteManagedLoginBrandingAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DeleteWebAuthnCredentialResponse> IAmazonCognitoIdentityProvider.DeleteWebAuthnCredentialAsync( DeleteWebAuthnCredentialRequest request, CancellationToken cancellationToken ) {
+		return Provider.DeleteWebAuthnCredentialAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DescribeManagedLoginBrandingResponse> IAmazonCognitoIdentityProvider.DescribeManagedLoginBrandingAsync( DescribeManagedLoginBrandingRequest request, CancellationToken cancellationToken ) {
+		return Provider.DescribeManagedLoginBrandingAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DescribeManagedLoginBrandingByClientResponse> IAmazonCognitoIdentityProvider.DescribeManagedLoginBrandingByClientAsync( DescribeManagedLoginBrandingByClientRequest request, CancellationToken cancellationToken ) {
+		return Provider.DescribeManagedLoginBrandingByClientAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<GetUserAuthFactorsResponse> IAmazonCognitoIdentityProvider.GetUserAuthFactorsAsync( GetUserAuthFactorsRequest request, CancellationToken cancellationToken ) {
+		return Provider.GetUserAuthFactorsAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<ListWebAuthnCredentialsResponse> IAmazonCognitoIdentityProvider.ListWebAuthnCredentialsAsync( ListWebAuthnCredentialsRequest request, CancellationToken cancellationToken ) {
+		return Provider.ListWebAuthnCredentialsAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<StartWebAuthnRegistrationResponse> IAmazonCognitoIdentityProvider.StartWebAuthnRegistrationAsync( StartWebAuthnRegistrationRequest request, CancellationToken cancellationToken ) {
+		return Provider.StartWebAuthnRegistrationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<UpdateManagedLoginBrandingResponse> IAmazonCognitoIdentityProvider.UpdateManagedLoginBrandingAsync( UpdateManagedLoginBrandingRequest request, CancellationToken cancellationToken ) {
+		return Provider.UpdateManagedLoginBrandingAsync( request, cancellationToken );
+	}
 }

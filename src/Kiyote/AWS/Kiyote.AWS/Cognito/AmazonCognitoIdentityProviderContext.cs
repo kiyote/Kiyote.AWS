@@ -1,6 +1,5 @@
 using Amazon;
 using Amazon.CognitoIdentityProvider;
-using Amazon.CognitoIdentityProvider.Model;
 using Amazon.Runtime;
 using Kiyote.AWS.Credentials;
 using Microsoft.Extensions.Options;
