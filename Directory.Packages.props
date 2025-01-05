@@ -1,19 +1,19 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="AWSSDK.CognitoIdentityProvider" Version="3.7.404.2" />
-    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="3.7.404" />
-    <PackageVersion Include="AWSSDK.S3" Version="3.7.410.1" />
-    <PackageVersion Include="AWSSDK.SecretsManager" Version="3.7.400.59" />
-    <PackageVersion Include="AWSSDK.SecurityToken" Version="3.7.401.8" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.2" />
-    <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
+    <PackageVersion Include="AWSSDK.CognitoIdentityProvider" Version="3.7.405.12" />
+    <PackageVersion Include="AWSSDK.DynamoDBv2" Version="3.7.404.13" />
+    <PackageVersion Include="AWSSDK.S3" Version="3.7.411" />
+    <PackageVersion Include="AWSSDK.SecretsManager" Version="3.7.400.72" />
+    <PackageVersion Include="AWSSDK.SecurityToken" Version="3.7.401.21" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.3" />
+    <PackageVersion Include="coverlet.msbuild" Version="6.0.3" />
     <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageVersion Include="Moq" Version="4.20.72" />
-    <PackageVersion Include="NUnit" Version="4.2.2" />
+    <PackageVersion Include="NUnit" Version="4.3.2" />
     <PackageVersion Include="NUnit3TestAdapter" Version="4.6.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
