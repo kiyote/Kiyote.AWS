@@ -4,7 +4,7 @@
 public sealed class DynamoDbContextContextTests {
 
 	private Mock<IAmazonDynamoDB<DynamoDbContextContextTests>>? _dynamoDb;
-	private DynamoDbContextContext<DynamoDbContextContextTests>? _context;
+	private DynamoDbContext<DynamoDbContextContextTests>? _context;
 
 	[SetUp]
 	public void SetUp() {
@@ -21,7 +21,7 @@ public sealed class DynamoDbContextContextTests {
 
 	[Test]
 	public void Ctor_ValidDynamoDb_ContextCreated() {
-		DynamoDbContextContext<DynamoDbContextContextTests> context = new DynamoDbContextContext<DynamoDbContextContextTests>(
+		DynamoDbContext<DynamoDbContextContextTests> context = new DynamoDbContext<DynamoDbContextContextTests>(
 			_dynamoDb!.Object
 		);
 

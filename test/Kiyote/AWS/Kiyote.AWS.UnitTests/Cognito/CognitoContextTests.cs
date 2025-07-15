@@ -9,7 +9,7 @@ public sealed class CognitoContextTests {
 
 	private Mock<ICredentialsProvider>? _credentialsProvider;
 	private Mock<IOptions<CognitoOptions<CognitoContextTests>>>? _options;
-	private AmazonCognitoIdentityProviderContext<CognitoContextTests>? _context;
+	private AmazonCognitoIdentityProvider<CognitoContextTests>? _context;
 
 	[SetUp]
 	public void SetUp() {
@@ -28,7 +28,7 @@ public sealed class CognitoContextTests {
 
 	[Test]
 	public void Ctor_NullOptions_ThrowsArgumentException() {
-		Assert.Throws<ArgumentException>( () => new AmazonCognitoIdentityProviderContext<CognitoContextTests>(
+		Assert.Throws<ArgumentException>( () => new AmazonCognitoIdentityProvider<CognitoContextTests>(
 			_credentialsProvider!.Object,
 			new NullOptions<CognitoOptions<CognitoContextTests>>()
 		) );
@@ -88,7 +88,7 @@ public sealed class CognitoContextTests {
 			.Setup( o => o.Value )
 			.Returns( options );
 
-		_context = new AmazonCognitoIdentityProviderContext<CognitoContextTests>(
+		_context = new AmazonCognitoIdentityProvider<CognitoContextTests>(
 			_credentialsProvider!.Object,
 			_options.Object
 		);

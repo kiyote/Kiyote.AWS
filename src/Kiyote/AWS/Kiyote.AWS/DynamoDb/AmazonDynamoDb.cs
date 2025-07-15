@@ -1,11 +1,68 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
+using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using Amazon.Runtime;
+using Kiyote.AWS.Credentials;
+using Microsoft.Extensions.Options;
 
 namespace Kiyote.AWS.DynamoDb;
 
-internal sealed partial class AmazonDynamoDbContext<T> {
+internal sealed class AmazonDynamoDb<T> : IAmazonDynamoDB<T> where T: class {
+
+	private bool _disposed;
+
+	public AmazonDynamoDb(
+		ICredentialsProvider credentialsProvider,
+		IOptions<DynamoDbOptions<T>> options
+	) {
+		if( options.Value is null ) {
+			throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
+		}
+
+		Client = CreateClient( credentialsProvider, options.Value );
+	}
+
+	public IAmazonDynamoDB Client { get; }
+
+	private static IAmazonDynamoDB CreateClient(
+		ICredentialsProvider credentialsProvider,
+		DynamoDbOptions<T> options
+	) {
+		AWSCredentials credentials = credentialsProvider.GetCredentials( options.CredentialsProfile );
+		if( !string.IsNullOrWhiteSpace( options.Role ) ) {
+			credentials = credentialsProvider.AssumeRole(
+				credentials,
+				options.Role
+			);
+		}
+
+		if( !string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
+			AmazonDynamoDBConfig config = new AmazonDynamoDBConfig {
+				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint )
+			};
+			return new AmazonDynamoDBClient( credentials, config );
+		}
+
+		return new AmazonDynamoDBClient( credentials );
+	}
+
+	public void Dispose() {
+		Dispose( true );
+		GC.SuppressFinalize( this );
+	}
+
+	private void Dispose( bool disposing ) {
+		if( _disposed ) {
+			return;
+		}
+
+		if( disposing ) {
+			Client.Dispose();
+		}
+
+		_disposed = true;
+	}
 
 	[ExcludeFromCodeCoverage]
 	IDynamoDBv2PaginatorFactory IAmazonDynamoDB.Paginators => Client.Paginators;
@@ -205,7 +262,7 @@ internal sealed partial class AmazonDynamoDbContext<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
-	Task<GetItemResponse> IAmazonDynamoDB.GetItemAsync( string tableName, Dictionary<string, AttributeValue> key, bool consistentRead, CancellationToken cancellationToken ) {
+	Task<GetItemResponse> IAmazonDynamoDB.GetItemAsync( string tableName, Dictionary<string, AttributeValue> key, bool? consistentRead, CancellationToken cancellationToken ) {
 		return Client.GetItemAsync( tableName, key, consistentRead, cancellationToken );
 	}
 
@@ -255,12 +312,12 @@ internal sealed partial class AmazonDynamoDbContext<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
-	Task<ListTablesResponse> IAmazonDynamoDB.ListTablesAsync( string exclusiveStartTableName, int limit, CancellationToken cancellationToken ) {
+	Task<ListTablesResponse> IAmazonDynamoDB.ListTablesAsync( string exclusiveStartTableName, int? limit, CancellationToken cancellationToken ) {
 		return Client.ListTablesAsync( exclusiveStartTableName, limit, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
-	Task<ListTablesResponse> IAmazonDynamoDB.ListTablesAsync( int limit, CancellationToken cancellationToken ) {
+	Task<ListTablesResponse> IAmazonDynamoDB.ListTablesAsync( int? limit, CancellationToken cancellationToken ) {
 		return Client.ListTablesAsync( limit, cancellationToken );
 	}
 

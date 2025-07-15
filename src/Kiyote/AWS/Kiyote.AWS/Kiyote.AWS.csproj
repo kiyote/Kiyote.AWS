@@ -4,7 +4,7 @@
 		<Authors>Todd Lang</Authors>
 		<Company>Todd Lang</Company>
 		<Description>Provides helper methods and classes to easily create AWS service clients that are for use in DI systems.</Description>
-		<Copyright>© 2020-2023 Todd Lang</Copyright>
+		<Copyright>© 2020-2025 Todd Lang</Copyright>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 

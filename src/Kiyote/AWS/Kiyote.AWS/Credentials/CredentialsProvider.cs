@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Amazon.Runtime;
 using Amazon.Runtime.CredentialManagement;
+using Amazon.Runtime.Credentials;
 using Microsoft.Extensions.Options;
 
 namespace Kiyote.AWS.Credentials;
@@ -39,7 +40,7 @@ public sealed class CredentialsProvider : ICredentialsProvider {
 		string? profile
 	) {
 		if( string.IsNullOrWhiteSpace( _options.Value.CredentialsFile ) ) {
-			return FallbackCredentialsFactory.GetCredentials( false );
+			return DefaultAWSCredentialsIdentityResolver.GetCredentials();
 		} else {
 			var chain = new CredentialProfileStoreChain( _options.Value.CredentialsFile );
 			if( !chain.TryGetAWSCredentials( profile ?? "default", out AWSCredentials credentials ) ) {

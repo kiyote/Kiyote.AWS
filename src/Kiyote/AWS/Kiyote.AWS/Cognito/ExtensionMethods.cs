@@ -16,7 +16,7 @@ public static class ExtensionMethods {
 
 		// Register the CognitoContext
 		services
-			.AddSingleton<IAmazonCognitoIdentityProvider<T>, AmazonCognitoIdentityProviderContext<T>>()
+			.AddSingleton<IAmazonCognitoIdentityProvider<T>, AmazonCognitoIdentityProvider<T>>()
 			.AddSingleton<CognitoOptionsValidator<T>>()
 			.AddOptions<CognitoOptions<T>>()
 			.Configure( ( opts ) => {

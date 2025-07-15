@@ -5,6 +5,13 @@ namespace Kiyote.AWS.Credentials.IntegrationTests;
 [TestFixture]
 public sealed class CredentialsProviderTests {
 
+	public const string AWS_ACCESS_KEY_ID = "AWS_ACCESS_KEY_ID";
+	public const string AWS_ACCESS_KEY_ID_VALUE = "AKIAIOSFODNN7EXAMPLE";
+	public const string AWS_SECRET_ACCESS_KEY = "AWS_SECRET_ACCESS_KEY";
+	public const string AWS_SECRET_ACCESS_KEY_VALUE = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY";
+	public const string AWS_SESSION_TOKEN = "AWS_SESSION_TOKEN";
+	public const string AWS_SESSION_TOKEN_VALUE = "907d7afee2cf46cbbae540dd3a185fbf";
+
 	private IServiceScope? _scope;
 	private ICredentialsProvider? _credentialsProvider;
 
@@ -26,6 +33,9 @@ public sealed class CredentialsProviderTests {
 
 	[Test]
 	public void GetCredentials_NoProfileFile_EnvironmentVariablesAWSCredentialsReturned() {
+		Environment.SetEnvironmentVariable( AWS_ACCESS_KEY_ID, AWS_ACCESS_KEY_ID_VALUE, EnvironmentVariableTarget.Process );
+		Environment.SetEnvironmentVariable( AWS_SECRET_ACCESS_KEY, AWS_SECRET_ACCESS_KEY_VALUE, EnvironmentVariableTarget.Process );
+
 		AWSCredentials? credentials = _credentialsProvider!.GetCredentials();
 
 		Assert.That( credentials, Is.Not.Null );
