@@ -1,13 +1,74 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
+using Amazon;
 using Amazon.Runtime;
 using Amazon.Runtime.Endpoints;
 using Amazon.Runtime.SharedInterfaces;
 using Amazon.S3;
 using Amazon.S3.Model;
+using Kiyote.AWS.Credentials;
+using Microsoft.Extensions.Options;
 
 namespace Kiyote.AWS.S3;
 
-internal sealed partial class AmazonS3Context<T> {
+internal sealed class AmazonS3<T> : IAmazonS3<T> where T: class {
+
+	private bool _disposed;
+
+	public AmazonS3(
+		ICredentialsProvider credentialsProvider,
+		IOptions<S3Options<T>> options
+	) {
+		if( options.Value is null ) {
+			throw new ArgumentException( $"{nameof( options )} must not be null.", nameof( options ) );
+		}
+
+		Client = CreateS3Client( credentialsProvider, options.Value );
+	}
+
+	public IAmazonS3 Client { get; }
+
+	IS3PaginatorFactory IAmazonS3.Paginators => throw new NotImplementedException();
+
+	IClientConfig IAmazonService.Config => throw new NotImplementedException();
+
+	private static IAmazonS3 CreateS3Client(
+		ICredentialsProvider credentialsProvider,
+		S3Options<T> options
+	) {
+		AWSCredentials credentials = credentialsProvider.GetCredentials( options.CredentialsProfile );
+		if( !string.IsNullOrWhiteSpace( options.Role ) ) {
+			credentials = credentialsProvider.AssumeRole(
+				credentials,
+				options.Role
+			);
+		}
+
+		if( !string.IsNullOrWhiteSpace( options.RegionEndpoint ) ) {
+			AmazonS3Config config = new AmazonS3Config() {
+				RegionEndpoint = RegionEndpoint.GetBySystemName( options.RegionEndpoint )
+			};
+			return new AmazonS3Client( credentials, config );
+		}
+
+		return new AmazonS3Client( credentials );
+	}
+
+	public void Dispose() {
+		Dispose( true );
+		GC.SuppressFinalize( this );
+	}
+
+	private void Dispose( bool disposing ) {
+		if( _disposed ) {
+			return;
+		}
+
+		if( disposing ) {
+			Client.Dispose();
+		}
+
+		_disposed = true;
+	}
 
 	[ExcludeFromCodeCoverage]
 	Task<AbortMultipartUploadResponse> IAmazonS3.AbortMultipartUploadAsync( string bucketName, string key, string uploadId, CancellationToken cancellationToken ) {
@@ -40,18 +101,24 @@ internal sealed partial class AmazonS3Context<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
-	Task<CopyPartResponse> IAmazonS3.CopyPartAsync( string sourceBucket, string sourceKey, string destinationBucket, string destinationKey, string uploadId, CancellationToken cancellationToken ) {
-		return Client.CopyPartAsync( sourceBucket, sourceKey, destinationBucket, destinationKey, uploadId, cancellationToken );
+	Task<CopyPartResponse> IAmazonS3.CopyPartAsync( string sourceBucket, string sourceKey, string destinationBucket, string destinationKey, string uploadId, int? partNumber, CancellationToken cancellationToken ) { 
+
+		return Client.CopyPartAsync( sourceBucket, sourceKey, destinationBucket, destinationKey, uploadId, partNumber, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
-	Task<CopyPartResponse> IAmazonS3.CopyPartAsync( string sourceBucket, string sourceKey, string sourceVersionId, string destinationBucket, string destinationKey, string uploadId, CancellationToken cancellationToken ) {
-		return Client.CopyPartAsync( sourceBucket, sourceKey, sourceVersionId, destinationBucket, destinationKey, uploadId, cancellationToken );
+	Task<CopyPartResponse> IAmazonS3.CopyPartAsync( string sourceBucket, string sourceKey, string sourceVersionId, string destinationBucket, string destinationKey, string uploadId, int? partNumber, CancellationToken cancellationToken ) {
+		return Client.CopyPartAsync( sourceBucket, sourceKey, sourceVersionId, destinationBucket, destinationKey, uploadId, partNumber, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
 	Task<CopyPartResponse> IAmazonS3.CopyPartAsync( CopyPartRequest request, CancellationToken cancellationToken ) {
 		return Client.CopyPartAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<CreateBucketMetadataTableConfigurationResponse> IAmazonS3.CreateBucketMetadataTableConfigurationAsync( CreateBucketMetadataTableConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.CreateBucketMetadataTableConfigurationAsync( request, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
@@ -92,6 +159,11 @@ internal sealed partial class AmazonS3Context<T> {
 	[ExcludeFromCodeCoverage]
 	Task<DeleteBucketInventoryConfigurationResponse> IAmazonS3.DeleteBucketInventoryConfigurationAsync( DeleteBucketInventoryConfigurationRequest request, CancellationToken cancellationToken ) {
 		return Client.DeleteBucketInventoryConfigurationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DeleteBucketMetadataTableConfigurationResponse> IAmazonS3.DeleteBucketMetadataTableConfigurationAsync( DeleteBucketMetadataTableConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.DeleteBucketMetadataTableConfigurationAsync( request, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
@@ -200,12 +272,6 @@ internal sealed partial class AmazonS3Context<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
-	[Obsolete]
-	Task<bool> ICoreAmazonS3.DoesS3BucketExistAsync( string bucketName ) {
-		return Client.DoesS3BucketExistAsync( bucketName );
-	}
-
-	[ExcludeFromCodeCoverage]
 	Task ICoreAmazonS3.DownloadToFilePathAsync( string bucketName, string objectKey, string filepath, IDictionary<string, object> additionalProperties, CancellationToken cancellationToken ) {
 		return Client.DownloadToFilePathAsync( bucketName, objectKey, filepath, additionalProperties, cancellationToken );
 	}
@@ -221,11 +287,13 @@ internal sealed partial class AmazonS3Context<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
+	[Obsolete]
 	Task<GetACLResponse> IAmazonS3.GetACLAsync( string bucketName, CancellationToken cancellationToken ) {
 		return Client.GetACLAsync( bucketName, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
+	[Obsolete]
 	Task<GetACLResponse> IAmazonS3.GetACLAsync( GetACLRequest request, CancellationToken cancellationToken ) {
 		return Client.GetACLAsync( request, cancellationToken );
 	}
@@ -243,6 +311,11 @@ internal sealed partial class AmazonS3Context<T> {
 	[ExcludeFromCodeCoverage]
 	Task<GetBucketAccelerateConfigurationResponse> IAmazonS3.GetBucketAccelerateConfigurationAsync( GetBucketAccelerateConfigurationRequest request, CancellationToken cancellationToken ) {
 		return Client.GetBucketAccelerateConfigurationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<GetBucketAclResponse> IAmazonS3.GetBucketAclAsync( GetBucketAclRequest request, CancellationToken cancellationToken ) {
+		return Client.GetBucketAclAsync( request, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
@@ -283,6 +356,11 @@ internal sealed partial class AmazonS3Context<T> {
 	[ExcludeFromCodeCoverage]
 	Task<GetBucketLoggingResponse> IAmazonS3.GetBucketLoggingAsync( GetBucketLoggingRequest request, CancellationToken cancellationToken ) {
 		return Client.GetBucketLoggingAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<GetBucketMetadataTableConfigurationResponse> IAmazonS3.GetBucketMetadataTableConfigurationAsync( GetBucketMetadataTableConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.GetBucketMetadataTableConfigurationAsync( request, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
@@ -381,6 +459,11 @@ internal sealed partial class AmazonS3Context<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
+	Task<GetObjectAclResponse> IAmazonS3.GetObjectAclAsync( GetObjectAclRequest request, CancellationToken cancellationToken ) {
+		return Client.GetObjectAclAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
 	Task<GetObjectResponse> IAmazonS3.GetObjectAsync( string bucketName, string key, CancellationToken cancellationToken ) {
 		return Client.GetObjectAsync( bucketName, key, cancellationToken );
 	}
@@ -466,6 +549,11 @@ internal sealed partial class AmazonS3Context<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
+	Task<HeadBucketResponse> IAmazonS3.HeadBucketAsync( HeadBucketRequest request, CancellationToken cancellationToken ) {
+		return Client.HeadBucketAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
 	Task<InitiateMultipartUploadResponse> IAmazonS3.InitiateMultipartUploadAsync( string bucketName, string key, CancellationToken cancellationToken ) {
 		return Client.InitiateMultipartUploadAsync( bucketName, key, cancellationToken );
 	}
@@ -497,7 +585,7 @@ internal sealed partial class AmazonS3Context<T> {
 
 	[ExcludeFromCodeCoverage]
 	Task<ListBucketsResponse> IAmazonS3.ListBucketsAsync( CancellationToken cancellationToken ) {
-		return Client.ListBucketsAsync(  cancellationToken );
+		return Client.ListBucketsAsync( cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
@@ -576,6 +664,7 @@ internal sealed partial class AmazonS3Context<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
+	[Obsolete]
 	Task<PutACLResponse> IAmazonS3.PutACLAsync( PutACLRequest request, CancellationToken cancellationToken ) {
 		return Client.PutACLAsync( request, cancellationToken );
 	}
@@ -583,6 +672,11 @@ internal sealed partial class AmazonS3Context<T> {
 	[ExcludeFromCodeCoverage]
 	Task<PutBucketAccelerateConfigurationResponse> IAmazonS3.PutBucketAccelerateConfigurationAsync( PutBucketAccelerateConfigurationRequest request, CancellationToken cancellationToken ) {
 		return Client.PutBucketAccelerateConfigurationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<PutBucketAclResponse> IAmazonS3.PutBucketAclAsync( PutBucketAclRequest request, CancellationToken cancellationToken ) {
+		return Client.PutBucketAclAsync( request, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
@@ -711,6 +805,11 @@ internal sealed partial class AmazonS3Context<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
+	Task<PutObjectAclResponse> IAmazonS3.PutObjectAclAsync( PutObjectAclRequest request, CancellationToken cancellationToken ) {
+		return Client.PutObjectAclAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
 	Task<PutObjectResponse> IAmazonS3.PutObjectAsync( PutObjectRequest request, CancellationToken cancellationToken ) {
 		return Client.PutObjectAsync( request, cancellationToken );
 	}
@@ -741,12 +840,17 @@ internal sealed partial class AmazonS3Context<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
+	Task<RenameObjectResponse> IAmazonS3.RenameObjectAsync( RenameObjectRequest request, CancellationToken cancellationToken ) {
+		return Client.RenameObjectAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
 	Task<RestoreObjectResponse> IAmazonS3.RestoreObjectAsync( string bucketName, string key, CancellationToken cancellationToken ) {
 		return Client.RestoreObjectAsync( bucketName, key, cancellationToken );
 	}
 
 	[ExcludeFromCodeCoverage]
-	Task<RestoreObjectResponse> IAmazonS3.RestoreObjectAsync( string bucketName, string key, int days, CancellationToken cancellationToken ) {
+	Task<RestoreObjectResponse> IAmazonS3.RestoreObjectAsync( string bucketName, string key, int? days, CancellationToken cancellationToken ) {
 		return Client.RestoreObjectAsync( bucketName, key, days, cancellationToken );
 	}
 
@@ -756,7 +860,7 @@ internal sealed partial class AmazonS3Context<T> {
 	}
 
 	[ExcludeFromCodeCoverage]
-	Task<RestoreObjectResponse> IAmazonS3.RestoreObjectAsync( string bucketName, string key, string versionId, int days, CancellationToken cancellationToken ) {
+	Task<RestoreObjectResponse> IAmazonS3.RestoreObjectAsync( string bucketName, string key, string versionId, int? days, CancellationToken cancellationToken ) {
 		return Client.RestoreObjectAsync( bucketName, key, versionId, days, cancellationToken );
 	}
 
@@ -788,20 +892,5 @@ internal sealed partial class AmazonS3Context<T> {
 	[ExcludeFromCodeCoverage]
 	Task<WriteGetObjectResponseResponse> IAmazonS3.WriteGetObjectResponseAsync( WriteGetObjectResponseRequest request, CancellationToken cancellationToken ) {
 		return Client.WriteGetObjectResponseAsync( request, cancellationToken );
-	}
-
-	[ExcludeFromCodeCoverage]
-	Task<CreateBucketMetadataTableConfigurationResponse> IAmazonS3.CreateBucketMetadataTableConfigurationAsync( CreateBucketMetadataTableConfigurationRequest request, CancellationToken cancellationToken ) {
-		return Client.CreateBucketMetadataTableConfigurationAsync( request, cancellationToken );
-	}
-
-	[ExcludeFromCodeCoverage]
-	Task<DeleteBucketMetadataTableConfigurationResponse> IAmazonS3.DeleteBucketMetadataTableConfigurationAsync( DeleteBucketMetadataTableConfigurationRequest request, CancellationToken cancellationToken ) {
-		return Client.DeleteBucketMetadataTableConfigurationAsync( request, cancellationToken );
-	}
-
-	[ExcludeFromCodeCoverage]
-	Task<GetBucketMetadataTableConfigurationResponse> IAmazonS3.GetBucketMetadataTableConfigurationAsync( GetBucketMetadataTableConfigurationRequest request, CancellationToken cancellationToken ) {
-		return Client.GetBucketMetadataTableConfigurationAsync( request, cancellationToken );
 	}
 }

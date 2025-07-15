@@ -7,7 +7,7 @@ public sealed class AmazonDynamoDbContextTests {
 
 	private Mock<ICredentialsProvider>? _credentialsProvider;
 	private Mock<IOptions<DynamoDbOptions<AmazonDynamoDbContextTests>>>? _options;
-	private AmazonDynamoDbContext<AmazonDynamoDbContextTests>? _context;
+	private AmazonDynamoDb<AmazonDynamoDbContextTests>? _context;
 
 	[SetUp]
 	public void SetUp() {
@@ -26,7 +26,7 @@ public sealed class AmazonDynamoDbContextTests {
 
 	[Test]
 	public void Ctor_NullOptions_ThrowsException() {
-		Assert.Throws<ArgumentException>( () => new AmazonDynamoDbContext<AmazonDynamoDbContextTests>(
+		Assert.Throws<ArgumentException>( () => new AmazonDynamoDb<AmazonDynamoDbContextTests>(
 			_credentialsProvider!.Object,
 			new NullOptions<DynamoDbOptions<AmazonDynamoDbContextTests>>()
 		) );
@@ -81,7 +81,7 @@ public sealed class AmazonDynamoDbContextTests {
 			.Setup( o => o.Value )
 			.Returns( options );
 
-		_context = new AmazonDynamoDbContext<AmazonDynamoDbContextTests>(
+		_context = new AmazonDynamoDb<AmazonDynamoDbContextTests>(
 			_credentialsProvider!.Object,
 			_options!.Object
 		);
