@@ -645,4 +645,29 @@ internal sealed class AmazonCognitoIdentityProvider<T> : IAmazonCognitoIdentityP
 	Task<UpdateManagedLoginBrandingResponse> IAmazonCognitoIdentityProvider.UpdateManagedLoginBrandingAsync( UpdateManagedLoginBrandingRequest request, CancellationToken cancellationToken ) {
 		return Provider.UpdateManagedLoginBrandingAsync( request, cancellationToken );
 	}
+
+	[ExcludeFromCodeCoverage]
+	Task<CreateTermsResponse> IAmazonCognitoIdentityProvider.CreateTermsAsync( CreateTermsRequest request, CancellationToken cancellationToken ) {
+		return Provider.CreateTermsAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DeleteTermsResponse> IAmazonCognitoIdentityProvider.DeleteTermsAsync( DeleteTermsRequest request, CancellationToken cancellationToken ) {
+		return Provider.DeleteTermsAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DescribeTermsResponse> IAmazonCognitoIdentityProvider.DescribeTermsAsync( DescribeTermsRequest request, CancellationToken cancellationToken ) {
+		return Provider.DescribeTermsAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<ListTermsResponse> IAmazonCognitoIdentityProvider.ListTermsAsync( ListTermsRequest request, CancellationToken cancellationToken ) {
+		return Provider.ListTermsAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<UpdateTermsResponse> IAmazonCognitoIdentityProvider.UpdateTermsAsync( UpdateTermsRequest request, CancellationToken cancellationToken ) {
+		return Provider.UpdateTermsAsync( request, cancellationToken );
+	}
 }
