@@ -893,4 +893,39 @@ internal sealed class AmazonS3<T> : IAmazonS3<T> where T: class {
 	Task<WriteGetObjectResponseResponse> IAmazonS3.WriteGetObjectResponseAsync( WriteGetObjectResponseRequest request, CancellationToken cancellationToken ) {
 		return Client.WriteGetObjectResponseAsync( request, cancellationToken );
 	}
+
+	[ExcludeFromCodeCoverage]
+	CreatePresignedPostResponse IAmazonS3.CreatePresignedPost( CreatePresignedPostRequest request ) {
+		return Client.CreatePresignedPost( request );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<CreatePresignedPostResponse> IAmazonS3.CreatePresignedPostAsync( CreatePresignedPostRequest request ) {
+		return Client.CreatePresignedPostAsync( request );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<CreateBucketMetadataConfigurationResponse> IAmazonS3.CreateBucketMetadataConfigurationAsync( CreateBucketMetadataConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.CreateBucketMetadataConfigurationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DeleteBucketMetadataConfigurationResponse> IAmazonS3.DeleteBucketMetadataConfigurationAsync( DeleteBucketMetadataConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.DeleteBucketMetadataConfigurationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<GetBucketMetadataConfigurationResponse> IAmazonS3.GetBucketMetadataConfigurationAsync( GetBucketMetadataConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.GetBucketMetadataConfigurationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<UpdateBucketMetadataInventoryTableConfigurationResponse> IAmazonS3.UpdateBucketMetadataInventoryTableConfigurationAsync( UpdateBucketMetadataInventoryTableConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.UpdateBucketMetadataInventoryTableConfigurationAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<UpdateBucketMetadataJournalTableConfigurationResponse> IAmazonS3.UpdateBucketMetadataJournalTableConfigurationAsync( UpdateBucketMetadataJournalTableConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.UpdateBucketMetadataJournalTableConfigurationAsync( request, cancellationToken );
+	}
 }
