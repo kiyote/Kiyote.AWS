@@ -928,4 +928,12 @@ internal sealed class AmazonS3<T> : IAmazonS3<T> where T: class {
 	Task<UpdateBucketMetadataJournalTableConfigurationResponse> IAmazonS3.UpdateBucketMetadataJournalTableConfigurationAsync( UpdateBucketMetadataJournalTableConfigurationRequest request, CancellationToken cancellationToken ) {
 		return Client.UpdateBucketMetadataJournalTableConfigurationAsync( request, cancellationToken );
 	}
+
+	Task<GetBucketAbacResponse> IAmazonS3.GetBucketAbacAsync( GetBucketAbacRequest request, CancellationToken cancellationToken ) {
+		return Client.GetBucketAbacAsync( request, cancellationToken );
+	}
+
+	Task<PutBucketAbacResponse> IAmazonS3.PutBucketAbacAsync( PutBucketAbacRequest request, CancellationToken cancellationToken ) {
+		return Client.PutBucketAbacAsync( request, cancellationToken );
+	}
 }

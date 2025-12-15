@@ -445,4 +445,12 @@ internal sealed class DynamoDbContext<T> : IDynamoDBContext<T> where T: class {
 	IAsyncSearch<TItem> IDynamoDBContext.ScanAsync<[DynamicallyAccessedMembers( (DynamicallyAccessedMemberTypes)( -1 ) )] TItem>( ContextExpression filterExpression, ScanConfig scanConfig ) {
 		return Context.ScanAsync<TItem>( filterExpression, scanConfig );
 	}
+
+	IAsyncSearch<TItem> IDynamoDBContext.QueryAsync<[DynamicallyAccessedMembers( (DynamicallyAccessedMemberTypes)( -1 ) )] TItem>( QueryConditional queryConditional, QueryConfig queryConfig ) {
+		return Context.QueryAsync<TItem>( queryConditional, queryConfig );
+	}
+
+	IAsyncSearch<TItem> IDynamoDBContext.FromQueryAsync<[DynamicallyAccessedMembers( (DynamicallyAccessedMemberTypes)( -1 ) )] TItem>( QueryDocumentOperationRequest queryOperationRequest, FromQueryConfig fromQueryConfig ) {
+		return Context.FromQueryAsync<TItem>( queryOperationRequest, fromQueryConfig );
+	}
 }
