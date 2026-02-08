@@ -936,4 +936,8 @@ internal sealed class AmazonS3<T> : IAmazonS3<T> where T: class {
 	Task<PutBucketAbacResponse> IAmazonS3.PutBucketAbacAsync( PutBucketAbacRequest request, CancellationToken cancellationToken ) {
 		return Client.PutBucketAbacAsync( request, cancellationToken );
 	}
+
+	Task<UpdateObjectEncryptionResponse> IAmazonS3.UpdateObjectEncryptionAsync(UpdateObjectEncryptionRequest request, CancellationToken cancellationToken) {
+		return Client.UpdateObjectEncryptionAsync( request, cancellationToken );
+	}
 }
