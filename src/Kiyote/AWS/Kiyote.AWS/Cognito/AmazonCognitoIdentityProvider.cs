@@ -342,6 +342,21 @@ internal sealed class AmazonCognitoIdentityProvider<T> : IAmazonCognitoIdentityP
 	}
 
 	[ExcludeFromCodeCoverage]
+	Task<AddUserPoolClientSecretResponse> IAmazonCognitoIdentityProvider.AddUserPoolClientSecretAsync( AddUserPoolClientSecretRequest request, CancellationToken cancellationToken ) {
+		return Provider.AddUserPoolClientSecretAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DeleteUserPoolClientSecretResponse> IAmazonCognitoIdentityProvider.DeleteUserPoolClientSecretAsync( DeleteUserPoolClientSecretRequest request, CancellationToken cancellationToken ) {
+		return Provider.DeleteUserPoolClientSecretAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<ListUserPoolClientSecretsResponse> IAmazonCognitoIdentityProvider.ListUserPoolClientSecretsAsync( ListUserPoolClientSecretsRequest request, CancellationToken cancellationToken ) {
+		return Provider.ListUserPoolClientSecretsAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
 	Endpoint IAmazonCognitoIdentityProvider.DetermineServiceOperationEndpoint( AmazonWebServiceRequest request ) {
 		return Provider.DetermineServiceOperationEndpoint( request );
 	}
