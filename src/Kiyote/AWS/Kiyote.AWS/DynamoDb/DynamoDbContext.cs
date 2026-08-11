@@ -453,4 +453,12 @@ internal sealed class DynamoDbContext<T> : IDynamoDBContext<T> where T: class {
 	IAsyncSearch<TItem> IDynamoDBContext.FromQueryAsync<[DynamicallyAccessedMembers( (DynamicallyAccessedMemberTypes)( -1 ) )] TItem>( QueryDocumentOperationRequest queryOperationRequest, FromQueryConfig fromQueryConfig ) {
 		return Context.FromQueryAsync<TItem>( queryOperationRequest, fromQueryConfig );
 	}
+
+	IAsyncSearchVectors<TItem> IDynamoDBContext.SearchVectorsAsync<[DynamicallyAccessedMembers( (DynamicallyAccessedMemberTypes)( -1 ) )] TItem>( List<float> searchVector, int topK, SearchVectorsConfig searchConfig ) {
+		return Context.SearchVectorsAsync<TItem>( searchVector, topK, searchConfig );
+	}
+
+	IAsyncSearchVectors<TItem> IDynamoDBContext.FromSearchVectorsAsync<[DynamicallyAccessedMembers( (DynamicallyAccessedMemberTypes)( -1 ) )] TItem>( SearchVectorsOperationRequest searchVectorsOperationRequest, FromSearchVectorsConfig fromSearchVectorsConfig ) {
+		return Context.FromSearchVectorsAsync<TItem>( searchVectorsOperationRequest, fromSearchVectorsConfig );
+	}
 }

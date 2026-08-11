@@ -26,7 +26,7 @@ internal sealed class AmazonCognitoIdentityProvider<T> : IAmazonCognitoIdentityP
 
 	public IAmazonCognitoIdentityProvider Provider { get; }
 
-	private static IAmazonCognitoIdentityProvider CreateCognitoProvider(
+	private static AmazonCognitoIdentityProviderClient CreateCognitoProvider(
 		ICredentialsProvider credentialsProvider,
 		CognitoOptions<T> options
 	) {
@@ -684,5 +684,33 @@ internal sealed class AmazonCognitoIdentityProvider<T> : IAmazonCognitoIdentityP
 	[ExcludeFromCodeCoverage]
 	Task<UpdateTermsResponse> IAmazonCognitoIdentityProvider.UpdateTermsAsync( UpdateTermsRequest request, CancellationToken cancellationToken ) {
 		return Provider.UpdateTermsAsync( request, cancellationToken );
+	}
+
+	Task<AdminGetUserAuthFactorsResponse> IAmazonCognitoIdentityProvider.AdminGetUserAuthFactorsAsync( AdminGetUserAuthFactorsRequest request, CancellationToken cancellationToken ) {
+		return Provider.AdminGetUserAuthFactorsAsync( request, cancellationToken );
+	}
+
+	Task<CreateUserPoolReplicaResponse> IAmazonCognitoIdentityProvider.CreateUserPoolReplicaAsync( CreateUserPoolReplicaRequest request, CancellationToken cancellationToken ) {
+		return Provider.CreateUserPoolReplicaAsync( request, cancellationToken );
+	}
+
+	Task<DeleteUserPoolReplicaResponse> IAmazonCognitoIdentityProvider.DeleteUserPoolReplicaAsync( DeleteUserPoolReplicaRequest request, CancellationToken cancellationToken ) {
+		return Provider.DeleteUserPoolReplicaAsync( request, cancellationToken );
+	}
+
+	Task<GetProvisionedLimitResponse> IAmazonCognitoIdentityProvider.GetProvisionedLimitAsync( GetProvisionedLimitRequest request, CancellationToken cancellationToken ) {
+		return Provider.GetProvisionedLimitAsync( request, cancellationToken );
+	}
+
+	Task<ListUserPoolReplicasResponse> IAmazonCognitoIdentityProvider.ListUserPoolReplicasAsync( ListUserPoolReplicasRequest request, CancellationToken cancellationToken ) {
+		return Provider.ListUserPoolReplicasAsync( request, cancellationToken );
+	}
+
+	Task<UpdateProvisionedLimitResponse> IAmazonCognitoIdentityProvider.UpdateProvisionedLimitAsync( UpdateProvisionedLimitRequest request, CancellationToken cancellationToken ) {
+		return Provider.UpdateProvisionedLimitAsync( request, cancellationToken );
+	}
+
+	Task<UpdateUserPoolReplicaResponse> IAmazonCognitoIdentityProvider.UpdateUserPoolReplicaAsync( UpdateUserPoolReplicaRequest request, CancellationToken cancellationToken ) {
+		return Provider.UpdateUserPoolReplicaAsync( request, cancellationToken );
 	}
 }

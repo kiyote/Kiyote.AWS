@@ -25,7 +25,7 @@ internal sealed class AmazonSecretsManager<T> : IAmazonSecretsManager<T> where T
 
 	public IAmazonSecretsManager Manager { get; }
 
-	private static IAmazonSecretsManager CreateSecretsManager(
+	private static AmazonSecretsManagerClient CreateSecretsManager(
 		ICredentialsProvider credentialsProvider,
 		SecretsManagerOptions<T> options
 	) {
