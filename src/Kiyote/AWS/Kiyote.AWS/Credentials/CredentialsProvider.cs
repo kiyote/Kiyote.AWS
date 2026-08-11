@@ -13,6 +13,7 @@ public sealed class CredentialsProvider : ICredentialsProvider {
 	public CredentialsProvider(
 		IOptions<CredentialsProviderOptions> options
 	) {
+		ArgumentNullException.ThrowIfNull( options, nameof( options ) );
 		if( options.Value is null ) {
 			throw new ArgumentException( $"{nameof( options )} must not be null", nameof( options ) );
 		}

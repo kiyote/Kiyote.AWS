@@ -25,7 +25,7 @@ internal sealed class AmazonDynamoDb<T> : IAmazonDynamoDB<T> where T: class {
 
 	public IAmazonDynamoDB Client { get; }
 
-	private static IAmazonDynamoDB CreateClient(
+	private static AmazonDynamoDBClient CreateClient(
 		ICredentialsProvider credentialsProvider,
 		DynamoDbOptions<T> options
 	) {
@@ -473,4 +473,7 @@ internal sealed class AmazonDynamoDb<T> : IAmazonDynamoDB<T> where T: class {
 		return Client.DeleteResourcePolicyAsync( request, cancellationToken );
 	}
 
+	Task<SearchVectorsResponse> IAmazonDynamoDB.SearchVectorsAsync( SearchVectorsRequest request, CancellationToken cancellationToken ) {
+		return Client.SearchVectorsAsync( request, cancellationToken );
+	}
 }

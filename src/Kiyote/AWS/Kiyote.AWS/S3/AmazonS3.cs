@@ -31,7 +31,7 @@ internal sealed class AmazonS3<T> : IAmazonS3<T> where T: class {
 
 	IClientConfig IAmazonService.Config => throw new NotImplementedException();
 
-	private static IAmazonS3 CreateS3Client(
+	private static AmazonS3Client CreateS3Client(
 		ICredentialsProvider credentialsProvider,
 		S3Options<T> options
 	) {
@@ -101,7 +101,7 @@ internal sealed class AmazonS3<T> : IAmazonS3<T> where T: class {
 	}
 
 	[ExcludeFromCodeCoverage]
-	Task<CopyPartResponse> IAmazonS3.CopyPartAsync( string sourceBucket, string sourceKey, string destinationBucket, string destinationKey, string uploadId, int? partNumber, CancellationToken cancellationToken ) { 
+	Task<CopyPartResponse> IAmazonS3.CopyPartAsync( string sourceBucket, string sourceKey, string destinationBucket, string destinationKey, string uploadId, int? partNumber, CancellationToken cancellationToken ) {
 
 		return Client.CopyPartAsync( sourceBucket, sourceKey, destinationBucket, destinationKey, uploadId, partNumber, cancellationToken );
 	}
@@ -939,5 +939,25 @@ internal sealed class AmazonS3<T> : IAmazonS3<T> where T: class {
 
 	Task<UpdateObjectEncryptionResponse> IAmazonS3.UpdateObjectEncryptionAsync(UpdateObjectEncryptionRequest request, CancellationToken cancellationToken) {
 		return Client.UpdateObjectEncryptionAsync( request, cancellationToken );
+	}
+
+	Task<DeleteObjectAnnotationResponse> IAmazonS3.DeleteObjectAnnotationAsync( DeleteObjectAnnotationRequest request, CancellationToken cancellationToken ) {
+		return Client.DeleteObjectAnnotationAsync( request, cancellationToken );
+	}
+
+	Task<GetObjectAnnotationResponse> IAmazonS3.GetObjectAnnotationAsync( GetObjectAnnotationRequest request, CancellationToken cancellationToken ) {
+		return Client.GetObjectAnnotationAsync( request, cancellationToken );
+	}
+
+	Task<ListObjectAnnotationsResponse> IAmazonS3.ListObjectAnnotationsAsync( ListObjectAnnotationsRequest request, CancellationToken cancellationToken ) {
+		return Client.ListObjectAnnotationsAsync( request, cancellationToken );
+	}
+
+	Task<PutObjectAnnotationResponse> IAmazonS3.PutObjectAnnotationAsync( PutObjectAnnotationRequest request, CancellationToken cancellationToken ) {
+		return Client.PutObjectAnnotationAsync( request, cancellationToken );
+	}
+
+	Task<UpdateBucketMetadataAnnotationTableConfigurationResponse> IAmazonS3.UpdateBucketMetadataAnnotationTableConfigurationAsync( UpdateBucketMetadataAnnotationTableConfigurationRequest request, CancellationToken cancellationToken ) {
+		return Client.UpdateBucketMetadataAnnotationTableConfigurationAsync( request, cancellationToken );
 	}
 }
