@@ -1,6 +1,6 @@
 <Project>
   <ItemGroup>
-    <PackageVersion Include="AWSSDK.CognitoIdentityProvider" Version="4.0.103.2" />
+    <PackageVersion Include="AWSSDK.CognitoIdentityProvider" Version="4.0.105" />
     <PackageVersion Include="AWSSDK.DynamoDBv2" Version="4.0.103.1" />
     <PackageVersion Include="AWSSDK.S3" Version="4.0.102.1" />
     <PackageVersion Include="AWSSDK.SecretsManager" Version="4.0.100.8" />
