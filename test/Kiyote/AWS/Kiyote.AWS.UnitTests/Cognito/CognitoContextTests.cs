@@ -1,4 +1,4 @@
-﻿using Kiyote.AWS.Credentials;
+using Kiyote.AWS.Credentials;
 
 namespace Kiyote.AWS.Cognito.UnitTests;
 
@@ -22,13 +22,13 @@ public sealed class CognitoContextTests {
 		_credentialsProvider?.VerifyAll();
 		_options?.VerifyAll();
 
-		_context?.Dispose();
+		(_context as IDisposable)?.Dispose();
 		_context = null;
 	}
 
 	[Test]
 	public void Ctor_NullOptions_ThrowsArgumentException() {
-		Assert.Throws<ArgumentException>( () => new AmazonCognitoIdentityProvider<CognitoContextTests>(
+		_ = Assert.Throws<ArgumentException>( () => new AmazonCognitoIdentityProvider<CognitoContextTests>(
 			_credentialsProvider!.Object,
 			new NullOptions<CognitoOptions<CognitoContextTests>>()
 		) );
@@ -40,11 +40,11 @@ public sealed class CognitoContextTests {
 		string role = "role";
 		string region = "us-east-1";
 		BasicAWSCredentials creds1 = new BasicAWSCredentials( "1", "1" );
-		_credentialsProvider!
+		_ = _credentialsProvider!
 			.Setup( cp => cp.GetCredentials( profile ) )
 			.Returns( creds1 );
 		BasicAWSCredentials creds2 = new BasicAWSCredentials( "2", "2" );
-		_credentialsProvider!
+		_ = _credentialsProvider!
 			.Setup( cp => cp.AssumeRole( creds1, role ) )
 			.Returns( creds2 );
 
@@ -63,7 +63,7 @@ public sealed class CognitoContextTests {
 		BasicAWSCredentials credentials = new BasicAWSCredentials( "accessKey", "secretKey" ) {
 		};
 		AWSConfigs.AWSRegion = "us-east-1";
-		_credentialsProvider!
+		_ = _credentialsProvider!
 			.Setup( cp => cp.GetCredentials( null ) )
 			.Returns( credentials );
 
@@ -84,7 +84,7 @@ public sealed class CognitoContextTests {
 			CredentialsProfile = credentialsProfile,
 			Role = role
 		};
-		_options!
+		_ = _options!
 			.Setup( o => o.Value )
 			.Returns( options );
 

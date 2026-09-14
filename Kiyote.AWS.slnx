@@ -1,0 +1,32 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CODEOWNERS" />
+    <File Path="create-orphan-branch.sh" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="forceclean.ps1" />
+    <File Path="LICENSE" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/">
+    <File Path=".github/dependabot.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/.github/workflows/">
+    <File Path=".github/workflows/ci.yml" />
+    <File Path=".github/workflows/release.yml" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Kiyote/" />
+  <Folder Name="/src/Kiyote/AWS/">
+    <Project Path="src/Kiyote/AWS/Kiyote.AWS/Kiyote.AWS.csproj" />
+  </Folder>
+  <Folder Name="/test/" />
+  <Folder Name="/test/Kiyote/" />
+  <Folder Name="/test/Kiyote/AWS/">
+    <Project Path="test/Kiyote/AWS/Kiyote.AWS.IntegrationTests/Kiyote.AWS.IntegrationTests.csproj" />
+    <Project Path="test/Kiyote/AWS/Kiyote.AWS.UnitTests/Kiyote.AWS.UnitTests.csproj" />
+  </Folder>
+</Solution>

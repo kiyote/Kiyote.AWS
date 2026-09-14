@@ -48,7 +48,7 @@ internal sealed class AmazonCognitoIdentityProvider<T> : IAmazonCognitoIdentityP
 		return new AmazonCognitoIdentityProviderClient( credentials );
 	}
 
-	public void Dispose() {
+	void IDisposable.Dispose() {
 		Dispose( true );
 		GC.SuppressFinalize( this );
 	}
@@ -686,31 +686,54 @@ internal sealed class AmazonCognitoIdentityProvider<T> : IAmazonCognitoIdentityP
 		return Provider.UpdateTermsAsync( request, cancellationToken );
 	}
 
+	[ExcludeFromCodeCoverage]
 	Task<AdminGetUserAuthFactorsResponse> IAmazonCognitoIdentityProvider.AdminGetUserAuthFactorsAsync( AdminGetUserAuthFactorsRequest request, CancellationToken cancellationToken ) {
 		return Provider.AdminGetUserAuthFactorsAsync( request, cancellationToken );
 	}
 
+	[ExcludeFromCodeCoverage]
 	Task<CreateUserPoolReplicaResponse> IAmazonCognitoIdentityProvider.CreateUserPoolReplicaAsync( CreateUserPoolReplicaRequest request, CancellationToken cancellationToken ) {
 		return Provider.CreateUserPoolReplicaAsync( request, cancellationToken );
 	}
 
+	[ExcludeFromCodeCoverage]
 	Task<DeleteUserPoolReplicaResponse> IAmazonCognitoIdentityProvider.DeleteUserPoolReplicaAsync( DeleteUserPoolReplicaRequest request, CancellationToken cancellationToken ) {
 		return Provider.DeleteUserPoolReplicaAsync( request, cancellationToken );
 	}
 
+	[ExcludeFromCodeCoverage]
 	Task<GetProvisionedLimitResponse> IAmazonCognitoIdentityProvider.GetProvisionedLimitAsync( GetProvisionedLimitRequest request, CancellationToken cancellationToken ) {
 		return Provider.GetProvisionedLimitAsync( request, cancellationToken );
 	}
 
+	[ExcludeFromCodeCoverage]
 	Task<ListUserPoolReplicasResponse> IAmazonCognitoIdentityProvider.ListUserPoolReplicasAsync( ListUserPoolReplicasRequest request, CancellationToken cancellationToken ) {
 		return Provider.ListUserPoolReplicasAsync( request, cancellationToken );
 	}
 
+	[ExcludeFromCodeCoverage]
 	Task<UpdateProvisionedLimitResponse> IAmazonCognitoIdentityProvider.UpdateProvisionedLimitAsync( UpdateProvisionedLimitRequest request, CancellationToken cancellationToken ) {
 		return Provider.UpdateProvisionedLimitAsync( request, cancellationToken );
 	}
 
+	[ExcludeFromCodeCoverage]
 	Task<UpdateUserPoolReplicaResponse> IAmazonCognitoIdentityProvider.UpdateUserPoolReplicaAsync( UpdateUserPoolReplicaRequest request, CancellationToken cancellationToken ) {
 		return Provider.UpdateUserPoolReplicaAsync( request, cancellationToken );
 	}
+
+	[ExcludeFromCodeCoverage]
+	Task<AdminDeleteSoftwareTokenResponse> IAmazonCognitoIdentityProvider.AdminDeleteSoftwareTokenAsync( AdminDeleteSoftwareTokenRequest request, CancellationToken cancellationToken ) {
+		return Provider.AdminDeleteSoftwareTokenAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<DescribeTermsByClientResponse> IAmazonCognitoIdentityProvider.DescribeTermsByClientAsync( DescribeTermsByClientRequest request, CancellationToken cancellationToken ) {
+		return Provider.DescribeTermsByClientAsync( request, cancellationToken );
+	}
+
+	[ExcludeFromCodeCoverage]
+	Task<GetClientTokenResponse> IAmazonCognitoIdentityProvider.GetClientTokenAsync( GetClientTokenRequest request, CancellationToken cancellationToken ) {
+		return Provider.GetClientTokenAsync( request, cancellationToken );
+	}
+
 }
